@@ -12,16 +12,27 @@ class Form extends Component {
         this.state = {
             startDate: new Date(),
             date: null,
+
+            details: [],
         }
     }
 
-    handleChange = date => {
+    handleDate = date => {
         this.setState({
             startDate: date,
         });
     };
 
-    search = () => {
+    handleChange = (e) => {
+        let nam = e.target.name;
+        let value = e.target.value;
+
+        this.setState({
+            [nam]: value,
+        })
+    }
+
+    book = (name) => {
         this.setState({
             date: null,
         });
@@ -33,7 +44,7 @@ class Form extends Component {
 
         date = 'D_' + d + '_' + m + '_' + y;
 
-        var ref = db.collection('Bus').doc("Bus1");
+        var ref = db.collection('Bus').doc(name);
 
         ref.get().then(function (doc) {
             if (doc.exists) {
@@ -64,21 +75,72 @@ class Form extends Component {
         });
     }
 
+
+    search = () => {
+        let ref = db.collectionGroup('location')
+            .where('from', '==', 'A').where('to', '==', 'B')
+        ref.get().then((querySnapshot) => {
+            let details = [];
+            querySnapshot.forEach(function (doc) {
+                let parent = doc.ref.parent.parent;
+
+                let arrivalTime = doc.data().arrival;
+                let departureTime = doc.data().departure;
+                let amount = doc.data().amount;
+                let from = doc.data().from;
+                let to = doc.data().to;
+
+                details.push({
+                    arrivalTime: arrivalTime,
+                    departureTime: departureTime,
+                    amount: amount,
+                    from: from,
+                    to: to,
+                    name: parent.id,
+                });
+            });
+            this.setState({
+                details: details
+            })
+        });
+    }
+
     render() {
         return (
             <div>
                 <DatePicker
                     selected={this.state.startDate}
-                    onChange={this.handleChange}
+                    onChange={this.handleDate}
                     minDate={new Date()}
                 />
+                <input type="text" name="from" placeholder='From' onChange={this.handleChange} />
+                <input type="text" name="to" placeholder='To' onChange={this.handleChange} />
                 <button onClick={this.search}>Search</button>
                 <br />
                 <br />
                 <br />
-                {this.state.date && <Seats date={this.state.date} />}
-                {/* {<Seats/>} */}
-            </div>
+                <div>
+                    {this.state.details && this.state.details.map((x, i) => {
+                        return (
+                            <div key={i}>
+                                <div>{x.name}</div>
+                                <div>Departure Time: {x.departureTime}</div>
+                                <div>Arrivali Time: {x.arrivalTime}</div>
+                                <div>Rs. {x.amount}</div>
+                                <div className="accordion" id="Bus_List">
+                                    <button className="btn btn-default" type="button"  onClick={() => this.book(x.name)} data-toggle="collapse" data-target={"#collapse" + i} aria-expanded="true" aria-controls={"collapse" + i}>Book</button>
+                                    <div id={"collapse" + i} className="collapse hide" aria-labelledby="headingOne" data-parent="#Bus_List">
+                                        {this.state.date && <Seats bus={x.name} date={this.state.date} />}
+
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                        )
+                    })}
+
+                </div>
+            </div >
         );
     }
 }

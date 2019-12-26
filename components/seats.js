@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import firebase from 'firebase';
+// import firebase from 'firebase';
 import './seats.css';
 import { db } from '../firebaseConfig';
 
@@ -18,11 +18,12 @@ class Seats extends Component {
 
             // for search
             date: this.props.date,
+            bus: this.props.bus,
         }
     }
 
     getData = () => {
-        let database = db.collection('Bus').doc('Bus1');
+        let database = db.collection('Bus').doc(this.state.bus);
         database.get().then((data) => {
             let userData = data.data();
             database.collection('Book').doc(this.state.date).get()
@@ -94,12 +95,24 @@ class Seats extends Component {
     }
 
     submitHandler = () => {
-        let ref = firebase.database().ref().child('/Bus/Bus1/');
-        ref.update({
-            defaultSeatCode: 'aaaaaaaaaaaaaaaaaaaaaa____________aaaaaaaaaa',
-            seats: 32,
-            location: 'a'
-        })
+        // let ref = db.collection('Bus');
+        // ref.set({
+        //     defaultSeatCode:'aaaaaaaaaaaaaaaaaaaaaa____________aaaaaaaaaa',
+        //     seats:'32',
+        //     location:[
+        //         {from:'A',to:'B',amount:1000,departure:'6:00 PM'},
+        //         {from:'B',to:'C',amount:500,departure:'7:00 PM'},
+        //         {from:'C',to:'D',amount:700,departure:'6:00 AM'},
+        //         {from:'D',to:'E',amount:600,departure:'9:00 AM'},
+        //     ]
+        // })
+        // ref.collection(location).add(
+        //     { from: 'A', to: 'B', amount: 1000, departure: '6:00 PM' },
+        //     { from: 'B', to: 'C', amount: 500, departure: '7:00 PM' },
+        //     { from: 'C', to: 'D', amount: 700, departure: '6:00 AM' },
+        //     { from: 'D', to: 'E', amount: 600, departure: '9:00 AM' },
+        // )
+
     }
 
     updateHandler = (seatSingle) => {
@@ -120,31 +133,27 @@ class Seats extends Component {
         let update = this.state.active;
         update = update.join('')
         let date = this.state.date;
-        db.collection('Bus').doc('Bus1')
-        .collection('Book').doc(date).update({
-            seatCode: update,
-        })
+        db.collection('Bus').doc(this.state.bus)
+            .collection('Book').doc(date).update({
+                seatCode: update,
+            })
     }
 
     render() {
         return (
-            <div className='container grid'>
-                <h1>Seat Reservation System</h1>
+            <div className='seat_box grid'>
                 <div className='flex'>
                     {this.state.seat.map((x, i) =>
-                        <div className={'card ' + this.state.classes[i]}
+                        <div className={'seat ' + this.state.classes[i]}
                             key={i} onClick={e => this.updateHandler(i)}>{x}</div>
                     )}
                 </div>
                 <div>
                     <br />
-                    <br />
-                    <br />
                     {/* <button onClick={this.submitHandler}>Submit</button> */}
-                    <button onClick={this.updateClick}>Book</button>
+                    <button onClick={this.updateClick}>Continue</button>
                 </div>
             </div>
-
         )
     }
 
