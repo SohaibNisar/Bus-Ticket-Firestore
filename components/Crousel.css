@@ -1,0 +1,127 @@
+#search-form {
+    margin-top: 60px;
+}
+
+@media (max-width: 575px) {
+    #search-form {
+        margin-top: 40px;
+    }
+}
+
+#search-form nav li {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#search-form nav li a i {
+    margin-right: 5px;
+}
+
+#search-form nav li:hover {
+    background-color: rgba(158, 158, 158, .2);
+}
+
+#search-form .image {
+    max-height: 400px;
+    overflow: hidden;
+}
+
+#search-form img {
+    min-height: 400px;
+    background-size: cover;
+    color: #fff;
+    display: table;
+    width: 100%;
+}
+
+#search-form .carousel-caption {
+    position: absolute;
+    bottom: 40px;
+    right: 10%;
+    left: 10%;
+    top: 120px;
+    z-index: 10;
+    padding-top: 20px;
+    padding-bottom: 40px;
+    color: #fff;
+    text-align: center;
+}
+
+#search-form .search {
+    position: absolute;
+    margin-top: -180px;
+    width: 100%;
+    z-index: 100;
+    color: white;
+    padding-top: 0px;
+    background: rgba(0, 0, 0, 0);
+}
+
+@media (max-width: 767px) {
+    #search-form .carousel-caption {
+        display: none!important;
+    }
+    #search-form .search {
+        margin-top: -340px;
+    }
+}
+
+#search-form .search-ground {
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.6);
+    min-height: 100px !important;
+}
+
+#search-form .search-ground .form-label {
+    color: #fff;
+    display: block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+@media (max-width: 767px) {
+    #search-form .search-ground .form-label {
+        display: none!important;
+    }
+    #search-form .search-ground .react-datepicker-wrapper {
+        width: 100%;
+    }
+}
+
+#search-form .search-ground .form-control {
+    background-color: #fff;
+    width: 100%;
+    display: block;
+    border-radius: 0px;
+    border: none;
+    height: 45px;
+    box-shadow: none;
+    font-size: 14px;
+    appearance: none;
+    padding-left: 10px;
+    text-indent: 30px;
+    color: #929292;
+    cursor: pointer;
+}
+
+#search-form .search-ground button#search {
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 1.3333333;
+    border-radius: 0;
+    color: #fff;
+    background-color: #FF7802;
+    border-color: #ec971f;
+    border: 1px solid transparent;
+}
+
+#search-form .search-ground .icon {
+    position: absolute;
+    font-size: 20px;
+    padding: 12px 0px 0px 8px;
+    color: #929292;
+    background-color: #fff;
+    z-index: 9999;
+    height: 45px;
+}

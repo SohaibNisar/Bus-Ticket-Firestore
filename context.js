@@ -1,12 +1,9 @@
-import React, { Component } from "react";
-import DatePicker from "react-datepicker";
-import Seats from './seats';
-// import { Link } from 'react-router-dom';
-import './form.css';
-import "react-datepicker/dist/react-datepicker.css";
-import { db } from '../firebaseConfig';
+import React, { Component } from 'react';
+import { db } from './firebaseConfig';
 
-class Form extends Component {
+export const Context = React.createContext();
+
+class Provider extends Component {
     constructor() {
         super()
         this.state = {
@@ -14,6 +11,8 @@ class Form extends Component {
             date: null,
 
             details: [],
+            // date: null,
+            bus: null,
         }
     }
 
@@ -33,9 +32,9 @@ class Form extends Component {
     }
 
     book = (name) => {
-        this.setState({
-            date: null,
-        });
+        // this.setState({
+        //     date: null,
+        // });
         let date = this.state.startDate;
 
         let d = date.getDate();
@@ -53,7 +52,8 @@ class Form extends Component {
                 bookRef.get().then((doc) => {
                     if (doc.exists) {
                         this.setState({
-                            date: date
+                            date: date,
+                            bus: name,
                         })
                     }
                     else {
@@ -61,7 +61,8 @@ class Form extends Component {
                             seatCode: defaultSeatCode
                         }, { merge: true }).then(() => {
                             this.setState({
-                                date: date
+                                date: date,
+                                bus: name,
                             })
                         })
                     }
@@ -74,7 +75,6 @@ class Form extends Component {
             console.log("Error getting document:", error);
         });
     }
-
 
     search = () => {
         let ref = db.collectionGroup('location')
@@ -104,45 +104,26 @@ class Form extends Component {
             })
         });
     }
+    // componentDidUpdate(){
+    //     console.log(this.state)
+    // }
 
     render() {
         return (
             <div>
-                <DatePicker
-                    selected={this.state.startDate}
-                    onChange={this.handleDate}
-                    minDate={new Date()}
-                />
-                <input type="text" name="from" placeholder='From' onChange={this.handleChange} />
-                <input type="text" name="to" placeholder='To' onChange={this.handleChange} />
-                <button onClick={this.search}>Search</button>
-                <br />
-                <br />
-                <br />
-                <div>
-                    {this.state.details && this.state.details.map((x, i) => {
-                        return (
-                            <div className='row' key={i}>
-                                <div>{x.name}</div>
-                                <div>Departure Time: {x.departureTime}</div>
-                                <div>Arrivali Time: {x.arrivalTime}</div>
-                                <div>Rs. {x.amount}</div>
-                                <div className="accordion" id="Bus_List">
-                                    <button className="btn btn-default" type="button"  onClick={() => this.book(x.name)} data-toggle="collapse" data-target={"#collapse" + i} aria-expanded="true" aria-controls={"collapse" + i}>Book</button>
-                                    <div id={"collapse" + i} className="collapse hide" aria-labelledby="headingOne" data-parent="#Bus_List">
-                                        {this.state.date && <Seats bus={x.name} date={this.state.date} />}
-
-                                    </div>
-                                </div>
-                                <br />
-                            </div>
-                        )
-                    })}
-
-                </div>
-            </div >
-        );
+                <Context.Provider value={{
+                    state: this.state,
+                    handleChange: this.handleChange,
+                    search: this.search,
+                    book: this.book
+                }}>
+                    {this.props.children}
+                </Context.Provider>
+            </div>
+        )
     }
 }
 
-export default Form;
+const Consumer = Context.Consumer;
+
+export { Provider, Consumer };
