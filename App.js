@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 // import SearchForm from './components/form';
 // import Search from './components/test';
-import Book from './components/test2';
+// import Book from './components/book';
 import Seats from './components/seatmap';
 import Test from './components/Crousel';
 import '@fortawesome/fontawesome-free/css/all.min.css';
@@ -18,7 +18,7 @@ class App extends Component {
         <BrowserRouter>
           <Switch>
             <Route exact path='/' component={Test} />
-            <Route exact path='/result' component={Book} />
+            {/* <Route exact path='/result' component={Book} /> */}
             <Route exact path='/seatmap' component={Seats} />
           </Switch>
         </BrowserRouter>

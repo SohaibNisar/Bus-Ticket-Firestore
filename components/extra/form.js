@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import DatePicker from "react-datepicker";
-import Seats from './seats';
+import Seats from '../seats';
 // import { Link } from 'react-router-dom';
 import './form.css';
 import "react-datepicker/dist/react-datepicker.css";
-import { db } from '../firebaseConfig';
+import { db } from '../../firebaseConfig';
 
 class Form extends Component {
     constructor() {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import searchForm from './data/images/crousel/form.jpg';
-import Book from './test2';
+import Book from './book';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import './Crousel.css';

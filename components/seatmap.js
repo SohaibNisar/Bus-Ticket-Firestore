@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Seats from './seats2';
+import Seats from './seats';
 import { Consumer } from '../context'
 
 export default class seatmap extends Component {

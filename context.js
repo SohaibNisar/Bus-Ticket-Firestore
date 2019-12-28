@@ -13,8 +13,8 @@ class Provider extends Component {
             details: [],
             // date: null,
             bus: null,
-            from:null,
-            to:null,
+            from: null,
+            to: null,
         }
     }
 
@@ -82,20 +82,20 @@ class Provider extends Component {
     }
 
     search = () => {
-        if (this.state.bus&&this.state.to&&this.state.from) {
+        if (this.state.bus && this.state.to && this.state.from) {
             let ref = db.collection('Bus').doc(this.state.bus).collection('location')
                 .where('from', '==', this.state.from).where('to', '==', this.state.to)
             ref.get().then((querySnapshot) => {
                 let details = [];
                 querySnapshot.forEach(function (doc) {
                     let parent = doc.ref.parent.parent;
-    
+
                     let arrivalTime = doc.data().arrival;
                     let departureTime = doc.data().departure;
                     let amount = doc.data().amount;
                     let from = doc.data().from;
                     let to = doc.data().to;
-    
+
                     details.push({
                         arrivalTime: arrivalTime,
                         departureTime: departureTime,
@@ -105,12 +105,19 @@ class Provider extends Component {
                         name: parent.id,
                     });
                 });
-                this.setState({
-                    details: details
-                })
+                if (details.length>0) {
+                    this.setState({
+                        details: details
+                    })
+                }
+                else{
+                    this.setState({
+                        details: 'nothing'
+                    })
+                }
             });
         }
-        else{
+        else {
             alert('Fill Fomr First')
         }
     }
