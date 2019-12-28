@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import './firebaseConfig';
-import {Provider} from './context';
+import { Provider } from './context';
 
 ReactDOM.render(
     <Provider>

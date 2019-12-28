@@ -7,9 +7,9 @@ export default class seatmap extends Component {
         return (
             <Consumer>
                 {(value)=>{
-                    console.log(value)
+                    console.log(value.state.date)
                     return(
-                        value.state.date&&<Seats date={value.state.date} bus={value.state.bus} />
+                        value.state.date?<Seats date={value.state.date} bus={value.state.bus} />:null
                     )
                 }}
             </Consumer>

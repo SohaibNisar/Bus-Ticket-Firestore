@@ -83,6 +83,9 @@ class Seats extends Component {
     }
 
     componentWillUnmount() {
+        this.setState({
+            bus:null,
+        })
         this._isMounted = false;
     }
 
@@ -92,27 +95,6 @@ class Seats extends Component {
         this.setState({
             [nam]: value,
         })
-    }
-
-    submitHandler = () => {
-        // let ref = db.collection('Bus');
-        // ref.set({
-        //     defaultSeatCode:'aaaaaaaaaaaaaaaaaaaaaa____________aaaaaaaaaa',
-        //     seats:'32',
-        //     location:[
-        //         {from:'A',to:'B',amount:1000,departure:'6:00 PM'},
-        //         {from:'B',to:'C',amount:500,departure:'7:00 PM'},
-        //         {from:'C',to:'D',amount:700,departure:'6:00 AM'},
-        //         {from:'D',to:'E',amount:600,departure:'9:00 AM'},
-        //     ]
-        // })
-        // ref.collection(location).add(
-        //     { from: 'A', to: 'B', amount: 1000, departure: '6:00 PM' },
-        //     { from: 'B', to: 'C', amount: 500, departure: '7:00 PM' },
-        //     { from: 'C', to: 'D', amount: 700, departure: '6:00 AM' },
-        //     { from: 'D', to: 'E', amount: 600, departure: '9:00 AM' },
-        // )
-
     }
 
     updateHandler = (seatSingle) => {

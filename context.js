@@ -13,6 +13,8 @@ class Provider extends Component {
             details: [],
             // date: null,
             bus: null,
+            from:null,
+            to:null,
         }
     }
 
@@ -32,9 +34,12 @@ class Provider extends Component {
     }
 
     book = (name) => {
-        // this.setState({
-        //     date: null,
-        // });
+        if (this.state.bus !== null) {
+            this.setState({
+                date: null,
+                bus: null,
+            })
+        }
         let date = this.state.startDate;
 
         let d = date.getDate();
@@ -77,36 +82,38 @@ class Provider extends Component {
     }
 
     search = () => {
-        let ref = db.collectionGroup('location')
-            .where('from', '==', 'A').where('to', '==', 'B')
-        ref.get().then((querySnapshot) => {
-            let details = [];
-            querySnapshot.forEach(function (doc) {
-                let parent = doc.ref.parent.parent;
-
-                let arrivalTime = doc.data().arrival;
-                let departureTime = doc.data().departure;
-                let amount = doc.data().amount;
-                let from = doc.data().from;
-                let to = doc.data().to;
-
-                details.push({
-                    arrivalTime: arrivalTime,
-                    departureTime: departureTime,
-                    amount: amount,
-                    from: from,
-                    to: to,
-                    name: parent.id,
+        if (this.state.bus&&this.state.to&&this.state.from) {
+            let ref = db.collection('Bus').doc(this.state.bus).collection('location')
+                .where('from', '==', this.state.from).where('to', '==', this.state.to)
+            ref.get().then((querySnapshot) => {
+                let details = [];
+                querySnapshot.forEach(function (doc) {
+                    let parent = doc.ref.parent.parent;
+    
+                    let arrivalTime = doc.data().arrival;
+                    let departureTime = doc.data().departure;
+                    let amount = doc.data().amount;
+                    let from = doc.data().from;
+                    let to = doc.data().to;
+    
+                    details.push({
+                        arrivalTime: arrivalTime,
+                        departureTime: departureTime,
+                        amount: amount,
+                        from: from,
+                        to: to,
+                        name: parent.id,
+                    });
                 });
+                this.setState({
+                    details: details
+                })
             });
-            this.setState({
-                details: details
-            })
-        });
+        }
+        else{
+            alert('Fill Fomr First')
+        }
     }
-    // componentDidUpdate(){
-    //     console.log(this.state)
-    // }
 
     render() {
         return (
@@ -115,7 +122,8 @@ class Provider extends Component {
                     state: this.state,
                     handleChange: this.handleChange,
                     search: this.search,
-                    book: this.book
+                    book: this.book,
+                    handleDate: this.handleDate,
                 }}>
                     {this.props.children}
                 </Context.Provider>

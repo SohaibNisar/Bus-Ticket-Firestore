@@ -105,6 +105,11 @@
     cursor: pointer;
 }
 
+#search-form .search-ground .not .form-control {
+    text-indent: 0px;
+    appearance: menulist;
+}
+
 #search-form .search-ground button#search {
     padding: 10px 16px;
     font-size: 18px;

@@ -18,7 +18,7 @@ class Book extends Component {
                                         <div>Rs. {x.amount}</div>
                                         <div>
                                             <button className="btn btn-default" type="button" onClick={() => value.book(x.name)}>
-                                                <Link to='seatmap'>Book</Link>
+                                                <Link to='seatmap' className='p-5 w-100'>Book</Link>
                                             </button>
 
                                         </div>
