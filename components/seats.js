@@ -18,15 +18,16 @@ class Seats extends Component {
 
             // for search
             date: this.props.date,
-            bus: this.props.bus,
+            operator: this.props.operator,
+            key:this.props.dockey,
         }
     }
 
     getData = () => {
-        let database = db.collection('Bus').doc(this.state.bus);
+        let database = db.collection('Bus').doc(this.state.operator);
         database.get().then((data) => {
             let userData = data.data();
-            database.collection('Book').doc(this.state.date).get()
+            database.collection('Data').doc(this.state.key).collection('Book').doc(this.state.date).get()
                 .then((data) => {
                     if (data.exists) {
                         let seatCode = data.data().seatCode;
@@ -84,7 +85,7 @@ class Seats extends Component {
 
     componentWillUnmount() {
         this.setState({
-            bus:null,
+            operator:null,
         })
         this._isMounted = false;
     }
@@ -114,9 +115,9 @@ class Seats extends Component {
     updateClick = () => {
         let update = this.state.active;
         update = update.join('')
-        let date = this.state.date;
-        db.collection('Bus').doc(this.state.bus)
-            .collection('Book').doc(date).update({
+        db.collection('Bus').doc(this.state.operator)
+        .collection('Data').doc(this.state.key)
+            .collection('Book').doc(this.state.date).update({
                 seatCode: update,
             })
     }

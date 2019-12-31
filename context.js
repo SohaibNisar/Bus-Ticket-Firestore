@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { db } from './firebaseConfig';
+import { withRouter } from 'react-router-dom'
 
 export const Context = React.createContext();
 
@@ -11,10 +12,13 @@ class Provider extends Component {
             date: null,
 
             details: [],
-            // date: null,
-            bus: null,
-            from: null,
-            to: null,
+            // operator: null,
+            // from: null,
+            // to: null,
+            key: null,
+            operator: 'Bus1',
+            from: 'Lahore',
+            to: 'Karachi',
         }
     }
 
@@ -33,11 +37,12 @@ class Provider extends Component {
         })
     }
 
-    book = (name) => {
-        if (this.state.bus !== null) {
+    book = (operator, key) => {
+        if (this.state.operator !== null) {
             this.setState({
                 date: null,
-                bus: null,
+                operator: null,
+                key: null,
             })
         }
         let date = this.state.startDate;
@@ -48,28 +53,32 @@ class Provider extends Component {
 
         date = 'D_' + d + '_' + m + '_' + y;
 
-        var ref = db.collection('Bus').doc(name);
+        var ref = db.collection('Bus').doc(operator);
 
         ref.get().then(function (doc) {
             if (doc.exists) {
                 let defaultSeatCode = doc.data().defaultSeatCode;
-                let bookRef = ref.collection('Book').doc(date);
+                let bookRef = ref.collection('Data').doc(key).collection('Book').doc(date);
                 bookRef.get().then((doc) => {
                     if (doc.exists) {
                         this.setState({
                             date: date,
-                            bus: name,
+                            operator: operator,
+                            key: key,
                         })
+                        this.props.history.push('/seatmap')
                     }
                     else {
-                        ref.collection('Book').doc(date).set({
+                        ref.collection('Data').doc(key).collection('Book').doc(date).set({
                             seatCode: defaultSeatCode
                         }, { merge: true }).then(() => {
                             this.setState({
                                 date: date,
-                                bus: name,
+                                operator: operator,
+                                key: key,
                             })
                         })
+                        this.props.history.push('/seatmap')
                     }
                 })
             }
@@ -82,19 +91,21 @@ class Provider extends Component {
     }
 
     search = () => {
-        if (this.state.bus && this.state.to && this.state.from) {
-            let ref = db.collection('Bus').doc(this.state.bus).collection('location')
+        if (this.state.operator === null || this.state.to === null || this.state.from === null) {
+            alert('Fill Form First')
+        }
+        else {
+            let ref = db.collection('Bus').doc(this.state.operator).collection('Data')
                 .where('from', '==', this.state.from).where('to', '==', this.state.to)
             ref.get().then((querySnapshot) => {
                 let details = [];
                 querySnapshot.forEach(function (doc) {
-                    let parent = doc.ref.parent.parent;
-
                     let arrivalTime = doc.data().arrival;
                     let departureTime = doc.data().departure;
                     let amount = doc.data().amount;
                     let from = doc.data().from;
                     let to = doc.data().to;
+                    let operator = doc.data().operator;
 
                     details.push({
                         arrivalTime: arrivalTime,
@@ -102,23 +113,21 @@ class Provider extends Component {
                         amount: amount,
                         from: from,
                         to: to,
-                        name: parent.id,
+                        key: doc.id,
+                        operator: operator,
                     });
                 });
-                if (details.length>0) {
+                if (details.length > 0) {
                     this.setState({
                         details: details
                     })
                 }
-                else{
+                else {
                     this.setState({
                         details: 'nothing'
                     })
                 }
             });
-        }
-        else {
-            alert('Fill Fomr First')
         }
     }
 
@@ -139,6 +148,7 @@ class Provider extends Component {
     }
 }
 
+Provider = withRouter(Provider)
 const Consumer = Context.Consumer;
 
 export { Provider, Consumer };

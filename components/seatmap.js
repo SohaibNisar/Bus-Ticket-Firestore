@@ -7,9 +7,11 @@ export default class seatmap extends Component {
         return (
             <Consumer>
                 {(value)=>{
-                    console.log(value.state.date)
+                    if (!value.state.key) {
+                        this.props.history.push('/');
+                    }
                     return(
-                        value.state.date?<Seats date={value.state.date} bus={value.state.bus} />:null
+                        value.state.date&&value.state.key&&value.state.operator?<Seats date={value.state.date} operator={value.state.operator} dockey={value.state.key} />:null
                     )
                 }}
             </Consumer>

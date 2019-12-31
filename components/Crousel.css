@@ -8,19 +8,6 @@
     }
 }
 
-#search-form nav li {
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
-#search-form nav li a i {
-    margin-right: 5px;
-}
-
-#search-form nav li:hover {
-    background-color: rgba(158, 158, 158, .2);
-}
-
 #search-form .image {
     max-height: 400px;
     overflow: hidden;
@@ -129,4 +116,5 @@
     background-color: #fff;
     z-index: 9999;
     height: 45px;
+    pointer-events: none;
 }
