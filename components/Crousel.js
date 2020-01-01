@@ -13,7 +13,7 @@ export default class Crousel extends Component {
             <Consumer>
                 {(value) => {
                     return (
-                        <div>
+                        <div id='search-page'>
                             <Nav />
                             <header id='search-form'>
                                 <div>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
-import './nav search.css'
+import './nav search.css';
 
 export default class nav extends Component {
     render() {
@@ -14,6 +14,12 @@ export default class nav extends Component {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="nav navbar-nav ml-auto">
+                            <li className="nav-item">
+                                <Link className="nav-link" to="#">
+                                    <i className="fas fa-home"></i>
+                                    Home
+                                    </Link>
+                            </li>
                             <li className="nav-item dropdown">
                                 <Link className="nav-link dropdown-toggle" to="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
@@ -24,9 +30,6 @@ export default class nav extends Component {
                                     <Link className="dropdown-item" to="#">Login</Link>
                                     <Link className="dropdown-item" to="#">Sign Up</Link>
                                 </div>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="#">Home</Link>
                             </li>
                             <li className="nav-item dropdown">
                                 <Link className="nav-link dropdown-toggle" to="#" id="navbarDropdownMenuLink" data-toggle="dropdown"

@@ -17,8 +17,8 @@ class Provider extends Component {
             // to: null,
             key: null,
             operator: 'Bus1',
-            from: 'Lahore',
-            to: 'Karachi',
+            to: 'Lahore',
+            from: 'Karachi',
         }
     }
 

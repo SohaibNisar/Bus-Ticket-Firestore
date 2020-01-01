@@ -1,3 +1,8 @@
+#search-page {
+    background-color: #f8f7f3;
+    min-height: 100vh !important;
+}
+
 #search-form {
     margin-top: 60px;
 }

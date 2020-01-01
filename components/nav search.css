@@ -10,3 +10,8 @@
 #search-form-nav nav li:hover {
     background-color: rgba(158, 158, 158, .2);
 }
+#search-form-nav nav .dropdown-menu{
+    width: 100%;
+    min-width: unset;
+}
+
