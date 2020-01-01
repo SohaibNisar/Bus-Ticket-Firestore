@@ -1,57 +1,121 @@
-h1 {
+#seatmap {
+  background-color: #f8f7f3;
+  min-height: 100vh !important;
+  margin-top: 60px;
+  padding-top: 40px;
+}
+
+@media (max-width: 575px) {
+  #seatmap {
+    margin-top: 40px;
+  }
+}
+
+#seatmap .seatmap {
+  background-color: #fff;
+  margin: 0 auto;
+}
+
+@media (max-width: 767px) {
+  #seatmap .container-seatplan {
+    border-right: none !important;
+  }
+}
+
+#seatmap .seatplan {
+  margin: 0 auto;
+  width: 210px;
+  background: #f6f6f6;
+  padding: 10px;
   text-align: center;
+  border-radius: 25px;
 }
 
-.seat_box {
-  /* margin: 0 auto; */
-  width: 350px;
+#seatmap .stering {
+  float: left;
+  width: 100%;
+  text-align: right;
+  padding: 10px 5px;
 }
 
-.flex {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  border: 2px solid orange;
+#seatmap .stering img {
+  width: 30px;
 }
 
-.grid .seat {
+#seatmap .seatplan .seat {
+  display: inline-block;
+  border-radius: 8px 8px 3px 3px;
+  cursor: default;
   width: 25px;
-  height: 25px;
-  text-align: center;
-  padding: 4px 0px;
-  border: 2px solid orange;
-  margin: 2px;
-  font-size: 12px;
+  height: 22px;
   box-sizing: border-box;
+  margin: 5px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 22px;
+  user-select: none;
 }
 
-.grid .seat:hover {
+#seatmap .seatplan .seat:hover {
   opacity: .7;
   cursor: pointer;
 }
 
-.reserved {
-  background: rgba(225, 165, 0, 0.8);
+#seatmap .reserved {
+  background: #003967;
   color: #fff;
   display: inline-block;
   pointer-events: none;
 }
 
-.available {
-  color: #333;
+#seatmap .available {
+  background-color: #1476d1 !important;
+  color: #fff;
 }
 
-.unavailable {
+#seatmap .unavailable {
   background-color: lightgray !important;
   pointer-events: none;
 }
 
-.emptySpace {
+#seatmap .emptySpace {
   border: none !important;
   margin: 2px !important;
   pointer-events: none;
 }
 
-.active {
+#seatmap .active {
   background-color: rgba(122, 218, 93, 0.719);
+}
+
+#seatmap .ligands .ligand {
+  display: inline-block;
+  border-radius: 8px 8px 3px 3px;
+  cursor: default;
+  width: 25px;
+  height: 22px;
+  box-sizing: border-box;
+  margin: 5px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 22px;
+}
+#seatmap .ligands .ligand.available {
+  background: #003967 !important;
+}
+#seatmap .ligands .ligand.reserved {
+  background: #1476d1 !important;
+}
+#seatmap .ligands .ligand.active {
+  background: rgba(122, 218, 93, 0.719) !important;
+}
+
+#seatmap .button{
+  text-align: right;
+}
+
+@media (max-width: 767px) {
+  #seatmap .button{
+    text-align: left;
+  }
 }

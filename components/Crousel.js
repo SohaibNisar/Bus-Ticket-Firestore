@@ -88,7 +88,7 @@ export default class Crousel extends Component {
                                 </div>
                             </header>
                             <div>
-                                <Book />
+                                {/* <Book /> */}
                             </div>
                         </div>
                     )

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 // import firebase from 'firebase';
 import './seats.css';
 import { db } from '../firebaseConfig';
-
+import Nav from './nav search'
+import stering from './data/images/stering.png'
 class Seats extends Component {
     _isMounted = false;
     constructor(props) {
@@ -15,15 +16,29 @@ class Seats extends Component {
             emptySpace: [],
             active: [],
             classes: [],
+            showDate: null,
+            seatCount: 0,
+            seatNo: [],
 
-            // for search
-            date: this.props.date,
-            operator: this.props.operator,
-            key:this.props.dockey,
+            // from search
+            // date: this.props.date,
+            // operator: this.props.operator,
+            // key:this.props.dockey,
+            // arrival: this.props.arrival,
+            // departure: this.props.departure,
+            // amount: this.props.amount,
+
+            date: 'D_1_1_2020',
+            operator: 'Bus1',
+            key: 'D2vSXYXy1qSLYvFNLrIh',
+            amount: 1000,
         }
     }
 
     getData = () => {
+        // console.log(this.state.date)
+        // console.log(this.state.operator)
+        // console.log(this.state.key)
         let database = db.collection('Bus').doc(this.state.operator);
         database.get().then((data) => {
             let userData = data.data();
@@ -40,6 +55,7 @@ class Seats extends Component {
                         let emptySpace = fliterSeats('_');
 
                         let busSeats = userData.seats;
+                        // let busSeats = 40;
                         let seat = [];
                         for (let i = 0; i < busSeats; i++) {
                             seat.push(i + 1);
@@ -81,11 +97,34 @@ class Seats extends Component {
     componentDidMount() {
         this._isMounted = true;
         this.getData();
+        let date = this.state.date.split('')
+        let showDate;
+        showDate = date.map(x => x === '_' ? '-' : x);
+        showDate.shift()
+        showDate.shift()
+        showDate = showDate.join('')
+        this.setState({
+            showDate: showDate,
+        })
+        // let a = [
+        //     'a', 'a', '_', 'a', 'a',
+        //     'a', 'a', '_', 'a', 'a',
+        //     'a', 'a', '_', 'a', 'a',
+        //     'a', 'a', '_', 'a', 'a',
+        //     'a', 'a', '_', 'a', 'a',
+        //     'a', 'a', '_', 'a', 'a',
+        //     'a', 'a', '_', 'a', 'a',
+        //     'a', 'a', '_', 'a', 'a',
+        //     'a', 'a', '_', 'a', 'a',
+        //     'a', 'a', 'a', 'a', 'a',
+        // ]
+        // console.log(a.length)
+        // console.log(a.join(''))
     }
 
     componentWillUnmount() {
         this.setState({
-            operator:null,
+            operator: null,
         })
         this._isMounted = false;
     }
@@ -98,13 +137,50 @@ class Seats extends Component {
         })
     }
 
-    updateHandler = (seatSingle) => {
-        let i = parseInt(seatSingle);
+    updateHandler = (seatindex, seatNo) => {
+        let i = parseInt(seatindex);
         let classesArray = this.state.classes;
         let active = this.state.active;
 
-        classesArray[i] = classesArray[i] === 'active' ? 'available' : 'active';
-        active[i] = active[i] === 'a' ? 'r' : 'a';
+        if (this.state.seatNo.indexOf(seatNo) > -1) {
+            this.setState({
+                seatNo: this.state.seatNo.filter(res => res !== seatNo)
+            })
+        } else {
+            this.setState({
+                seatNo: this.state.seatNo.concat(seatNo),
+            })
+        }
+
+        // classesArray[i] = classesArray[i] === 'active' ? 'available' : 'active';
+        if (classesArray[i] === 'active') {
+            classesArray[i] = 'available';
+            this.setState({
+                seatCount: this.state.seatCount - 1,
+            })
+        }
+        else {
+            if (this.state.seatCount < 6) {
+                classesArray[i] = 'active';
+                this.setState({
+                    seatCount: this.state.seatCount + 1,
+                })
+            }
+        }
+
+        // active[i] = active[i] === 'a' ? 'r' : 'a';
+        if (active[i] === 'a') {
+            if (this.state.seatCount < 6) {
+                active[i] = 'r';
+            }
+            else {
+                alert("You can't select more than 6 seats per booking")
+            }
+        }
+        else {
+            active[i] = 'a';
+        }
+
 
         this.setState({
             classes: classesArray,
@@ -116,7 +192,7 @@ class Seats extends Component {
         let update = this.state.active;
         update = update.join('')
         db.collection('Bus').doc(this.state.operator)
-        .collection('Data').doc(this.state.key)
+            .collection('Data').doc(this.state.key)
             .collection('Book').doc(this.state.date).update({
                 seatCode: update,
             })
@@ -124,17 +200,70 @@ class Seats extends Component {
 
     render() {
         return (
-            <div className='seat_box grid'>
-                <div className='flex'>
-                    {this.state.seat.map((x, i) =>
-                        <div className={'seat ' + this.state.classes[i]}
-                            key={i} onClick={e => this.updateHandler(i)}>{x}</div>
-                    )}
-                </div>
-                <div>
-                    <br />
-                    {/* <button onClick={this.submitHandler}>Submit</button> */}
-                    <button onClick={this.updateClick}>Continue</button>
+            <div id='seatmap'>
+                <Nav />
+                <div className='col-md-9 seatmap p-4'>
+                    <h5 className='mb-4'><b>Route - </b>FAISALABAD to RAWALPINDI</h5>
+                    <div className='row'>
+                        <div className='container-seatplan col-md-6 border-right mb-4'>
+                            <div className='seatplan'>
+                                <div className="stering">
+                                    <img src={stering} alt='stering' />
+                                </div>
+                                <div>
+                                    {this.state.seat.map((x, i) =>
+                                        <div className={'seat ' + this.state.classes[i]}
+                                            key={i} onClick={e => this.updateHandler(i, x)}>{x}</div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                        <div className='col-md-6 pl-4'>
+                            <h5 className='text-primary font-weight-bold'>Booking Details</h5>
+                            <div className='mt-4'>
+                                <p>
+                                    <b>Service: </b>{this.state.operator}<br />
+                                    <b>Departure Date: </b>{this.state.showDate}<br />
+                                    <b>Arrival Time: </b>{this.state.arrival}<br />
+                                    <b>Departure Time: </b>{this.state.departure}
+                                </p>
+                            </div>
+                            <div className='mt-4'>
+                                <p>Please select your seats</p>
+                                <div className='ligands d-flex flex-wrap'>
+                                    <div className='d-flex align-items-center'>
+                                        <div className='ligand reserved'></div>
+                                        <small>Available</small>
+                                    </div>
+                                    <div className='d-flex align-items-center'>
+                                        <div className='ligand available'></div>
+                                        <small>Reserved</small>
+                                    </div>
+                                    <div className='d-flex align-items-center'>
+                                        <div className='ligand active'></div>
+                                        <small>Selected</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='mt-5'>
+                                <div className='d-inline-block'>
+                                    <h6 className='font-weight-bold text-primary'>Selected</h6>
+                                    <span className='font-weight-bold text-muted'>{this.state.seatCount}</span>
+                                </div>
+                                <div className='d-inline-block ml-5'>
+                                    <h6 className='font-weight-bold text-primary'>Seats No.</h6>
+                                    <span className='font-weight-bold text-muted'>{this.state.seatNo.length === 0 ? '0 Seats' : this.state.seatNo.sort(function (a, b) { return a - b }).join(', ')}</span>
+                                </div>
+                                <div className='d-inline-block ml-5'>
+                                    <h6 className='font-weight-bold text-primary'>Amount</h6>
+                                    <span className='font-weight-bold text-muted'>Rs: {this.state.amount*this.state.seatCount}</span>
+                                </div>
+                            </div>
+                            <div className='w-100 mt-5 button'>
+                                <button className='btn btn-sm btn-blue rounded' onClick={this.updateClick}>Book</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         )
