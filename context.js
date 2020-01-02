@@ -12,13 +12,16 @@ class Provider extends Component {
             date: null,
 
             details: [],
-            // operator: null,
-            // from: null,
-            // to: null,
+            operator: null,
+            from: null,
+            to: null,
             key: null,
-            operator: 'Bus1',
-            to: 'Lahore',
-            from: 'Karachi',
+            amount: null,
+            arrivalTime: null,
+            departureTime: null,
+            // operator: 'Bus1',
+            // to: 'Lahore',
+            // from: 'Karachi',
         }
     }
 
@@ -37,12 +40,15 @@ class Provider extends Component {
         })
     }
 
-    book = (operator, key) => {
+    book = (operator, key, amount, arrivalTime, departureTime) => {
         if (this.state.operator !== null) {
             this.setState({
                 date: null,
                 operator: null,
                 key: null,
+                amount: null,
+                arrivalTime: null,
+                departureTime: null,
             })
         }
         let date = this.state.startDate;
@@ -58,27 +64,36 @@ class Provider extends Component {
         ref.get().then(function (doc) {
             if (doc.exists) {
                 let defaultSeatCode = doc.data().defaultSeatCode;
+                let seats = doc.data().seats;
                 let bookRef = ref.collection('Data').doc(key).collection('Book').doc(date);
                 bookRef.get().then((doc) => {
                     if (doc.exists) {
                         this.setState({
-                            date: date,
-                            operator: operator,
-                            key: key,
+                            // date: date,
+                            // operator: operator,
+                            // key: key,
+                            // amount: amount,
+                            // arrivalTime: arrivalTime,
+                            // departureTime: departureTime,
                         })
                         this.props.history.push('/seatmap')
                     }
                     else {
                         ref.collection('Data').doc(key).collection('Book').doc(date).set({
-                            seatCode: defaultSeatCode
-                        }, { merge: true }).then(() => {
-                            this.setState({
-                                date: date,
-                                operator: operator,
-                                key: key,
+                            seatCode: defaultSeatCode,
+                            availabelSeats: seats,
+                        }, { merge: true })
+                            .then(() => {
+                                this.setState({
+                                    date: date,
+                                    operator: operator,
+                                    key: key,
+                                    amount: amount,
+                                    arrivalTime: arrivalTime,
+                                    departureTime: departureTime,
+                                })
+                                this.props.history.push('/seatmap')
                             })
-                        })
-                        this.props.history.push('/seatmap')
                     }
                 })
             }
@@ -95,6 +110,18 @@ class Provider extends Component {
             alert('Fill Form First')
         }
         else {
+            if (this.state.details[0]!==undefined) {
+                this.setState({
+                    details:[]
+                })
+            }
+            let date = this.state.startDate;
+
+            let d = date.getDate();
+            let m = date.getMonth() + 1;
+            let y = date.getFullYear();
+
+            date = 'D_' + d + '_' + m + '_' + y;
             let ref = db.collection('Bus').doc(this.state.operator).collection('Data')
                 .where('from', '==', this.state.from).where('to', '==', this.state.to)
             ref.get().then((querySnapshot) => {
@@ -107,7 +134,9 @@ class Provider extends Component {
                     let to = doc.data().to;
                     let operator = doc.data().operator;
 
+                    let id = doc.id;
                     details.push({
+                        id: id,
                         arrivalTime: arrivalTime,
                         departureTime: departureTime,
                         amount: amount,
@@ -117,9 +146,24 @@ class Provider extends Component {
                         operator: operator,
                     });
                 });
+
                 if (details.length > 0) {
-                    this.setState({
-                        details: details
+                    details.forEach((x, i) => {
+                        let id = details[i].id;
+                        db.collection('Bus/Bus1/Data/' + id + '/Book/').doc(date).get().then((doc) => {
+                            let availabelSeats;
+                            if (doc.exists) {
+                                availabelSeats = doc.data().availabelSeats;
+                            }
+                            else {
+                                availabelSeats = 41;
+                            }
+                            delete x.id;
+                            x.availabelSeats = availabelSeats;
+                            this.setState({
+                                details: this.state.details.concat(x),
+                            })
+                        })
                     })
                 }
                 else {

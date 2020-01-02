@@ -21,17 +21,17 @@ class Seats extends Component {
             seatNo: [],
 
             // from search
-            // date: this.props.date,
-            // operator: this.props.operator,
-            // key:this.props.dockey,
-            // arrival: this.props.arrival,
-            // departure: this.props.departure,
-            // amount: this.props.amount,
+            date: this.props.date,
+            operator: this.props.operator,
+            key: this.props.dockey,
+            arrivalTime: this.props.arrivalTime,
+            departureTime: this.props.departureTime,
+            amount: this.props.amount,
 
-            date: 'D_1_1_2020',
-            operator: 'Bus1',
-            key: 'D2vSXYXy1qSLYvFNLrIh',
-            amount: 1000,
+            // date: 'D_1_1_2020',
+            // operator: 'Bus1',
+            // key: 'D2vSXYXy1qSLYvFNLrIh',
+            // amount: 1000,
         }
     }
 
@@ -55,7 +55,6 @@ class Seats extends Component {
                         let emptySpace = fliterSeats('_');
 
                         let busSeats = userData.seats;
-                        // let busSeats = 40;
                         let seat = [];
                         for (let i = 0; i < busSeats; i++) {
                             seat.push(i + 1);
@@ -147,9 +146,11 @@ class Seats extends Component {
                 seatNo: this.state.seatNo.filter(res => res !== seatNo)
             })
         } else {
-            this.setState({
-                seatNo: this.state.seatNo.concat(seatNo),
-            })
+            if (this.state.seatCount < 6) {
+                this.setState({
+                    seatNo: this.state.seatNo.concat(seatNo),
+                })
+            }
         }
 
         // classesArray[i] = classesArray[i] === 'active' ? 'available' : 'active';
@@ -224,8 +225,8 @@ class Seats extends Component {
                                 <p>
                                     <b>Service: </b>{this.state.operator}<br />
                                     <b>Departure Date: </b>{this.state.showDate}<br />
-                                    <b>Arrival Time: </b>{this.state.arrival}<br />
-                                    <b>Departure Time: </b>{this.state.departure}
+                                    <b>Arrival Time: </b>{this.state.arrivalTime}<br />
+                                    <b>Departure Time: </b>{this.state.departureTime}
                                 </p>
                             </div>
                             <div className='mt-4'>
@@ -246,17 +247,19 @@ class Seats extends Component {
                                 </div>
                             </div>
                             <div className='mt-5'>
-                                <div className='d-inline-block'>
-                                    <h6 className='font-weight-bold text-primary'>Selected</h6>
-                                    <span className='font-weight-bold text-muted'>{this.state.seatCount}</span>
-                                </div>
-                                <div className='d-inline-block ml-5'>
-                                    <h6 className='font-weight-bold text-primary'>Seats No.</h6>
-                                    <span className='font-weight-bold text-muted'>{this.state.seatNo.length === 0 ? '0 Seats' : this.state.seatNo.sort(function (a, b) { return a - b }).join(', ')}</span>
-                                </div>
-                                <div className='d-inline-block ml-5'>
-                                    <h6 className='font-weight-bold text-primary'>Amount</h6>
-                                    <span className='font-weight-bold text-muted'>Rs: {this.state.amount*this.state.seatCount}</span>
+                                <div className="row m-0">
+                                    <div className='col-md-4 p-0 pr-4'>
+                                        <h6 className='font-weight-bold text-primary'>Selected</h6>
+                                        <span className='font-weight-bold text-muted'>{this.state.seatCount}</span>
+                                    </div>
+                                    <div className='col-md-4 p-0 pr-4'>
+                                        <h6 className='font-weight-bold text-primary'>Seats No.</h6>
+                                        <span className='font-weight-bold text-muted'>{this.state.seatNo.length === 0 ? '0 Seats' : this.state.seatNo.sort(function (a, b) { return a - b }).join(', ')}</span>
+                                    </div>
+                                    <div className='col-md-4 p-0 pr-4'>
+                                        <h6 className='font-weight-bold text-primary'>Amount</h6>
+                                        <span className='font-weight-bold text-muted'>Rs: {this.state.amount * this.state.seatCount}</span>
+                                    </div>
                                 </div>
                             </div>
                             <div className='w-100 mt-5 button'>

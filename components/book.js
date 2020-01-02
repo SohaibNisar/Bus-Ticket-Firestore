@@ -18,6 +18,8 @@ class Book extends Component {
                         return (
                             <div className='container mt-5' id='book-container'>
                                 {value.state.details && value.state.details.map((x, i) => {
+                                    //    console.log(x)
+                                    //    console.log(x.availabelSeats)
                                     return (
                                         <div key={i} className='box'>
                                             <div className='details'>
@@ -33,23 +35,23 @@ class Book extends Component {
                                                         <div className='row m-0 py-3'>
                                                             <div className='shedule col-md-3 border-right'>
                                                                 <div>
-                                                                    <i className="fas fa-bus icon not"></i>
-                                                                </div>
-                                                                <div>
-                                                                    <label className='blue-text text-uppercase'>Departure Time</label>
-                                                                    <div className='text-muted font-weight-bold'>
-                                                                        {x.departureTime}
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div className='shedule col-md-3 border-right'>
-                                                                <div>
                                                                     <i className="fas fa-bus icon"></i>
                                                                 </div>
                                                                 <div>
                                                                     <label className='blue-text text-uppercase'>Arrival Time</label>
                                                                     <div className='text-muted font-weight-bold'>
                                                                         {x.arrivalTime}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className='shedule col-md-3 border-right'>
+                                                                <div>
+                                                                    <i className="fas fa-bus icon not"></i>
+                                                                </div>
+                                                                <div>
+                                                                    <label className='blue-text text-uppercase'>Departure Time</label>
+                                                                    <div className='text-muted font-weight-bold'>
+                                                                        {x.departureTime}
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -71,14 +73,14 @@ class Book extends Component {
                                                                 <div>
                                                                     <label className='blue-text text-uppercase'>Availabel Seats</label>
                                                                     <div className='text-muted font-weight-bold'>
-                                                                        {32}
+                                                                        {x.availabelSeats}
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div className='col-md-2 col-4 p-0 py-3 text-center border-left'>
-                                                        <button className="btn btn-primary" type="button" onClick={() => value.book(x.operator, x.key)}>
+                                                        <button className="btn btn-primary" type="button" onClick={() => value.book(x.operator, x.key, x.amount, x.arrivalTime, x.departureTime)}>
                                                             Book
                                                 </button>
 
@@ -91,7 +93,6 @@ class Book extends Component {
                             </div>
                         )
                     }
-
                 }}
             </Consumer>
         )
