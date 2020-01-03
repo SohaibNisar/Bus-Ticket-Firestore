@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 // import Data from './components/data';
 import Seats from './components/seatmap';
-// import Test from './components/seats';
+import Test from './components/seats';
 import Crousel from './components/Crousel';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';

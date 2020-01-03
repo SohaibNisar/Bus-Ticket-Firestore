@@ -69,12 +69,12 @@ class Provider extends Component {
                 bookRef.get().then((doc) => {
                     if (doc.exists) {
                         this.setState({
-                            // date: date,
-                            // operator: operator,
-                            // key: key,
-                            // amount: amount,
-                            // arrivalTime: arrivalTime,
-                            // departureTime: departureTime,
+                            date: date,
+                            operator: operator,
+                            key: key,
+                            amount: amount,
+                            arrivalTime: arrivalTime,
+                            departureTime: departureTime,
                         })
                         this.props.history.push('/seatmap')
                     }

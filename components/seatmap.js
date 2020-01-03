@@ -11,7 +11,7 @@ export default class seatmap extends Component {
                         this.props.history.push('/');
                     }
                     if (value.state.date && value.state.key && value.state.operator) {
-                        console.log(value.state.date)
+                        // console.log(value.state.date)
                         return (
                             <Seats date={value.state.date}
                                 operator={value.state.operator}

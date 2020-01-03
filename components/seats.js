@@ -28,10 +28,12 @@ class Seats extends Component {
             departureTime: this.props.departureTime,
             amount: this.props.amount,
 
-            // date: 'D_1_1_2020',
+            // date: 'D_3_1_2020',
             // operator: 'Bus1',
-            // key: 'D2vSXYXy1qSLYvFNLrIh',
+            // key: 'H5o2blDQkNFujyFFLt7T',
             // amount: 1000,
+            // arrivalTime: '5:00',
+            // departureTime: '6:00',
         }
     }
 
@@ -190,13 +192,17 @@ class Seats extends Component {
     }
 
     updateClick = () => {
-        let update = this.state.active;
-        update = update.join('')
-        db.collection('Bus').doc(this.state.operator)
+        let seatCode = this.state.active;
+        seatCode = seatCode.join('')
+        let ref = db.collection('Bus').doc(this.state.operator)
             .collection('Data').doc(this.state.key)
-            .collection('Book').doc(this.state.date).update({
-                seatCode: update,
+            .collection('Book').doc(this.state.date);
+        ref.get().then((doc) => {
+            ref.update({
+                seatCode: seatCode,
+                availabelSeats: doc.data().availabelSeats - this.state.seatCount,
             })
+        })
     }
 
     render() {
