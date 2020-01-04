@@ -15,7 +15,7 @@ export default class nav extends Component {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="nav navbar-nav ml-auto">
                             <li className="nav-item">
-                                <Link className="nav-link" to="#">
+                                <Link className="nav-link" to="/">
                                     <i className="fas fa-home"></i>
                                     Home
                                     </Link>
@@ -27,8 +27,8 @@ export default class nav extends Component {
                                     My Account
                                                 </Link>
                                 <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                                    <Link className="dropdown-item" to="#">Login</Link>
-                                    <Link className="dropdown-item" to="#">Sign Up</Link>
+                                    <Link className="dropdown-item" to="signin">Login</Link>
+                                    <Link className="dropdown-item" to="signin">Sign Up</Link>
                                 </div>
                             </li>
                             <li className="nav-item dropdown">
