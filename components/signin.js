@@ -3,7 +3,7 @@ import $ from 'jquery'
 import './signin.css';
 import { Link } from 'react-router-dom';
 import { firebase } from '../firebaseConfig';
-import { db } from '../firebaseConfig'
+import { db } from '../firebaseConfig';
 
 class Signin extends Component {
     constructor() {
@@ -124,14 +124,6 @@ class Signin extends Component {
                     $('.name, .phone , .email, .pass, .passConfirm').blur();
                 }
                 else {
-                    // $('.signup, .login').addClass('switched');
-
-                    // setTimeout(function () { $('.signup, .login').hide(); }, 700);
-                    // setTimeout(function () { $('.brand').addClass('active'); }, 300);
-                    // setTimeout(function () { $('.heading').addClass('active'); }, 600);
-                    // setTimeout(function () { $('.success-msg p').addClass('active'); }, 900);
-                    // setTimeout(function () { $('.success-msg a').addClass('active'); }, 1050);
-                    // setTimeout(function () { $('.form').hide(); }, 700);
                     let name = this.state.username;
                     let email = this.state.emailAdress;
                     let phone = this.state.phone;
@@ -159,18 +151,39 @@ class Signin extends Component {
                 }
             });
 
-            $('form.login-form').submit(function (event) {
+            $('form.login-form').submit((event) => {
                 event.preventDefault();
+                let email = this.state.loginemail;
+                let password = this.state.loginPassword;
+                firebase.auth().signInWithEmailAndPassword(email, password)
+                .then(()=>{
+                    this.setState({
+                        loginPassword:'',
+                        loginemail:'',
+                    })
+                })
+                .catch(function (error) {
+                    // var errorCode = error.code;
+                    var errorMessage = error.message;
+                    alert(errorMessage);
+                });
             });
         });
 
         firebase.auth().onAuthStateChanged((user) => {
+            // let location = useLocation();
             if (user) {
-                console.log(user.uid)
-            } 
-            else {
-                console.log('else')
+                // console.log(user.uid)
+                this.props.history.goBack();
+                // this.props.history.push('/');
             }
+            // else {
+                // console.log(location.pathname)
+                // this.props.history.goBack();
+                // if (location.pathname==='/seatmap') {
+                    // this.props.history.goBack();
+                // }
+            // }
         });
     }
 
@@ -182,138 +195,92 @@ class Signin extends Component {
         })
     }
 
-    // submitHandlerSignUp = () => {
-    //     let name = this.state.username;
-    //     let email = this.state.emailAdress;
-    //     let phone = this.state.phone;
-    //     let password = this.state.password;
-    //     let passwordCon = this.state.passwordCon;
-
-    //     if (password === passwordCon && username!=='') {
-    //         firebase.auth().createUserWithEmailAndPassword(email, password)
-    //             .then((user) => {
-    //                 this.setState({
-    //                     username: '',
-    //                     emailAdress: '',
-    //                     phone: '',
-    //                     password: '',
-    //                     passwordCon: '',
-    //                 })
-    //                 console.log(user.uid)
-    //                 let ref = db.collection('Users').doc(user.uid).add({
-
-    //                 })
-    //             })
-    //             .catch(function (error) {
-    //                 var errorMessage = error.message;
-    //                 alert(errorMessage)
-    //             })
-    //     }
-    // }
-
-    submitHandlerLogin = () => {
-        let email = this.state.loginemail;
-        let password = this.state.loginPassword;
-        firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
-            // var errorCode = error.code;
-            var errorMessage = error.message;
-            alert(errorMessage)
-        });
-    }
-
     render() {
         return (
+            <div id='signin'>
+                <div className="container">
+                    <section id="formHolder">
 
-            <div className="container">
-                <section id="formHolder">
+                        <div className="row justify-content-center">
+                            <div className="col-sm-8 col-md-6 brand">
+                                <Link to="#" className="logo">EB <span>.</span></Link>
 
-                    <div className="row justify-content-center">
+                                <div className="heading">
+                                    <h2>E-Bus</h2>
+                                    <p>Your Right Choice</p>
+                                </div>
 
-                        <div className="col-sm-8 col-md-6 brand">
-                            <Link to="#" className="logo">EB <span>.</span></Link>
-
-                            <div className="heading">
-                                <h2>E-Bus</h2>
-                                <p>Your Right Choice</p>
+                                <div className="success-msg">
+                                    <p>Great! You are one of our members now</p>
+                                    <Link to="#" className="profile">Your Profile</Link>
+                                </div>
                             </div>
 
-                            <div className="success-msg">
-                                <p>Great! You are one of our members now</p>
-                                <Link to="#" className="profile">Your Profile</Link>
-                            </div>
-                        </div>
+                            <div className="col-sm-7 col-md-6 form">
+                                <div className="login form-peice switched">
+                                    <form className="login-form">
+                                        <div className="form-group">
+                                            <label htmlFor="loginemail">Email Adderss</label>
+                                            <input type="email" name="loginemail" id="loginemail" onChange={this.inputHandler} required />
+                                        </div>
+
+                                        <div className="form-group">
+                                            <label htmlFor="loginPassword">Password</label>
+                                            <input type="password" name="loginPassword" id="loginPassword" onChange={this.inputHandler} required />
+                                        </div>
+
+                                        <div className="CTA">
+                                            <input type="submit" value="Login" />
+                                            <Link to="#" className="switch">I'm New</Link>
+                                        </div>
+                                    </form>
+                                </div>
 
 
+                                <div className="signup form-peice">
+                                    <form className="signup-form">
 
-                        <div className="col-sm-7 col-md-6 form">
+                                        <div className="form-group">
+                                            <label htmlFor="name">Full Name</label>
+                                            <input type="text" name="username" id="name" className="name" value={this.state.username} onChange={this.inputHandler} />
+                                            <span className="error"></span>
+                                        </div>
 
-                            <div className="login form-peice switched">
-                                <form className="login-form" onSubmit={this.submitHandlerLogin}>
-                                    <div className="form-group">
-                                        <label htmlFor="loginemail">Email Adderss</label>
-                                        <input type="email" name="loginemail" id="loginemail" onChange={this.inputHandler} required />
-                                    </div>
+                                        <div className="form-group">
+                                            <label htmlFor="email">Email Adderss</label>
+                                            <input type="email" name="emailAdress" id="email" className="email" value={this.state.emailAdress} onChange={this.inputHandler} />
+                                            <span className="error"></span>
+                                        </div>
 
-                                    <div className="form-group">
-                                        <label htmlFor="loginPassword">Password</label>
-                                        <input type="password" name="loginPassword" id="loginPassword" onChange={this.inputHandler} required />
-                                    </div>
+                                        <div className="form-group">
+                                            <label htmlFor="phone">Phone Number</label>
+                                            <input type="text" name="phone" id="phone" className="phone" value={this.state.phone} onChange={this.inputHandler} />
+                                            <span className="error"></span>
+                                        </div>
 
-                                    <div className="CTA">
-                                        <input type="submit" value="Login" />
-                                        <Link to="#" className="switch">I'm New</Link>
-                                    </div>
-                                </form>
-                            </div>
+                                        <div className="form-group">
+                                            <label htmlFor="password">Password</label>
+                                            <input type="password" name="password" id="password" className="pass" value={this.state.password} onChange={this.inputHandler} />
+                                            <span className="error"></span>
+                                        </div>
 
+                                        <div className="form-group">
+                                            <label htmlFor="passwordCon">Confirm Password</label>
+                                            <input type="password" name="passwordCon" id="passwordCon" className="passConfirm" value={this.state.passwordCon} onChange={this.inputHandler} />
+                                            <span className="error"></span>
+                                        </div>
 
-                            <div className="signup form-peice">
-                                <form className="signup-form">
-
-                                    <div className="form-group">
-                                        <label htmlFor="name">Full Name</label>
-                                        <input type="text" name="username" id="name" className="name" value={this.state.username} onChange={this.inputHandler} />
-                                        <span className="error"></span>
-                                    </div>
-
-                                    <div className="form-group">
-                                        <label htmlFor="email">Email Adderss</label>
-                                        <input type="email" name="emailAdress" id="email" className="email" value={this.state.emailAdress} onChange={this.inputHandler} />
-                                        <span className="error"></span>
-                                    </div>
-
-                                    <div className="form-group">
-                                        <label htmlFor="phone">Phone Number</label>
-                                        <input type="text" name="phone" id="phone" className="phone" value={this.state.phone} onChange={this.inputHandler} />
-                                        <span className="error"></span>
-                                    </div>
-
-                                    <div className="form-group">
-                                        <label htmlFor="password">Password</label>
-                                        <input type="password" name="password" id="password" className="pass" value={this.state.password} onChange={this.inputHandler} />
-                                        <span className="error"></span>
-                                    </div>
-
-                                    <div className="form-group">
-                                        <label htmlFor="passwordCon">Confirm Password</label>
-                                        <input type="password" name="passwordCon" id="passwordCon" className="passConfirm" value={this.state.passwordCon} onChange={this.inputHandler} />
-                                        <span className="error"></span>
-                                    </div>
-
-                                    <div className="CTA">
-                                        <input type="submit" value="Signup Now" id="submit" />
-                                        <Link to="#" className="switch">I have an account</Link>
-                                    </div>
-                                </form>
+                                        <div className="CTA">
+                                            <input type="submit" value="Signup Now" id="submit" />
+                                            <Link to="#" className="switch">I have an account</Link>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                </section>
-
-
+                    </section>
+                </div>
             </div>
-
         )
     }
 }

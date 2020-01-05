@@ -1,0 +1,76 @@
+#checkout {
+    background: #f8f7f3;
+    min-width: 100%;
+    min-height: 100vh;
+    padding-top: 40px;
+    min-width: 310px;
+}
+/* #checkout .container{
+} */
+
+#checkout h1 {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 28px;
+    color: #33b5e5;
+    padding-bottom: 15px;
+}
+
+#checkout .details-box {
+    background: #fff;
+    padding: 15px !important;
+    clear: both;
+    border-radius: 15px;
+    color: #838383;
+    box-shadow: 0px 0px 20px #aaa;
+}
+
+#checkout .details-box ul li {
+    list-style-type: none;
+    font-size: 13px;
+    margin-bottom: 5px;
+    margin: 0;
+    padding: 0;
+}
+
+#checkout .details-box label {
+    margin: 2px 0px;
+    text-transform: uppercase;
+    display: block;
+    font-weight: normal;
+    font-size: 0.9167em;
+    letter-spacing: 0.04em;
+    max-width: 100%;
+    font: 75%/150% "Lato", Arial, Helvetica, sans-serif;
+}
+
+#checkout .details-box input[type=text], #checkout .details-box input[type=email] {
+    background-color: #f1f1f1;
+    width: 100%;
+    font-size: 12px;
+    border: 1px solid transparent;
+    cursor: text;
+    padding-left: 15px;
+    padding-right: 15px;
+    height: 34px;
+    color: #838383;
+}
+
+#checkout .details-box ul li.payable {
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+    padding: 3px 5px;
+}
+
+#checkout .details-box ul .checkbox label {
+    font-size: 1.0833em;
+}
+
+#checkout .details-box ul .btn {
+    background-color: #33b5e5 !important;
+    font-weight: bold;
+    color: #fff;
+    border: none;
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
+}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { db } from './firebaseConfig';
 import { withRouter } from 'react-router-dom'
+// import { firebase } from "./firebaseConfig";
 
 export const Context = React.createContext();
 
@@ -8,20 +9,34 @@ class Provider extends Component {
     constructor() {
         super()
         this.state = {
+            // date
             startDate: new Date(),
-            date: null,
 
+            // multi
+            // date: null,
+            date: 'D_5_1_2020',
+
+            // search
             details: [],
-            operator: null,
-            from: null,
-            to: null,
-            key: null,
+            // to: null,
+            // from: null,
+
+            // book seacrh print
+            // operator: null,
+            // key: null,
             amount: null,
             arrivalTime: null,
             departureTime: null,
-            // operator: 'Bus1',
-            // to: 'Lahore',
-            // from: 'Karachi',
+            key: 'H5o2blDQkNFujyFFLt7T',
+            operator: 'Bus1',
+            to: 'Lahore',
+            from: 'Karachi',
+
+            // book checkout
+            // from seat
+            seatCode:null,
+            seatCount:null,
+            payment:null,
         }
     }
 
@@ -40,6 +55,31 @@ class Provider extends Component {
         })
     }
 
+    checkout=(seatCode,seatCount,payment,showdate)=>{
+        if (seatCode && seatCount) {
+            this.setState({
+                seatCode:seatCode,
+                seatCount:seatCount,
+                showdate:showdate,
+                payment:payment,
+            })
+        }
+    }
+
+    bookCon = () => {
+        let seatCode = this.state.seatCode;
+        seatCode = seatCode.join('')
+        let ref = db.collection('Bus').doc(this.state.operator)
+            .collection('Data').doc(this.state.key)
+            .collection('Book').doc(this.state.date);
+        ref.get().then((doc) => {
+            ref.update({
+                seatCode: seatCode,
+                availabelSeats: doc.data().availabelSeats - this.state.seatCount,
+            })
+        })
+    }
+
     book = (operator, key, amount, arrivalTime, departureTime) => {
         if (this.state.operator !== null) {
             this.setState({
@@ -51,39 +91,25 @@ class Provider extends Component {
                 departureTime: null,
             })
         }
-        let date = this.state.startDate;
-
-        let d = date.getDate();
-        let m = date.getMonth() + 1;
-        let y = date.getFullYear();
-
-        date = 'D_' + d + '_' + m + '_' + y;
-
-        var ref = db.collection('Bus').doc(operator);
-
-        ref.get().then(function (doc) {
-            if (doc.exists) {
-                let defaultSeatCode = doc.data().defaultSeatCode;
-                let seats = doc.data().seats;
-                let bookRef = ref.collection('Data').doc(key).collection('Book').doc(date);
-                bookRef.get().then((doc) => {
+        // firebase.auth().onAuthStateChanged(function (user) {
+            // if (user) {
+                let date = this.state.startDate;
+        
+                let d = date.getDate();
+                let m = date.getMonth() + 1;
+                let y = date.getFullYear();
+        
+                date = 'D_' + d + '_' + m + '_' + y;
+        
+                var ref = db.collection('Bus').doc(operator);
+        
+                ref.get().then(function (doc) {
                     if (doc.exists) {
-                        this.setState({
-                            date: date,
-                            operator: operator,
-                            key: key,
-                            amount: amount,
-                            arrivalTime: arrivalTime,
-                            departureTime: departureTime,
-                        })
-                        this.props.history.push('/seatmap')
-                    }
-                    else {
-                        ref.collection('Data').doc(key).collection('Book').doc(date).set({
-                            seatCode: defaultSeatCode,
-                            availabelSeats: seats,
-                        }, { merge: true })
-                            .then(() => {
+                        let defaultSeatCode = doc.data().defaultSeatCode;
+                        let seats = doc.data().seats;
+                        let bookRef = ref.collection('Data').doc(key).collection('Book').doc(date);
+                        bookRef.get().then((doc) => {
+                            if (doc.exists) {
                                 this.setState({
                                     date: date,
                                     operator: operator,
@@ -93,16 +119,38 @@ class Provider extends Component {
                                     departureTime: departureTime,
                                 })
                                 this.props.history.push('/seatmap')
-                            })
+                            }
+                            else {
+                                ref.collection('Data').doc(key).collection('Book').doc(date).set({
+                                    seatCode: defaultSeatCode,
+                                    availabelSeats: seats,
+                                }, { merge: true })
+                                    .then(() => {
+                                        this.setState({
+                                            date: date,
+                                            operator: operator,
+                                            key: key,
+                                            amount: amount,
+                                            arrivalTime: arrivalTime,
+                                            departureTime: departureTime,
+                                        })
+                                        this.props.history.push('/seatmap')
+                                    })
+                            }
+                        })
                     }
-                })
-            }
-            else {
-                console.log("No such document!");
-            }
-        }.bind(this)).catch(function (error) {
-            console.log("Error getting document:", error);
-        });
+                    else {
+                        console.log("No such document!");
+                    }
+                }.bind(this)).catch(function (error) {
+                    console.log("Error getting document:", error);
+                });
+            //  }
+        //      else{
+        //          alert('else')
+        //         this.props.history.push('/signin');
+        //      }
+        // }.bind(this));
     }
 
     search = () => {
@@ -110,9 +158,9 @@ class Provider extends Component {
             alert('Fill Form First')
         }
         else {
-            if (this.state.details[0]!==undefined) {
+            if (this.state.details[0] !== undefined) {
                 this.setState({
-                    details:[]
+                    details: []
                 })
             }
             let date = this.state.startDate;
@@ -184,6 +232,8 @@ class Provider extends Component {
                     search: this.search,
                     book: this.book,
                     handleDate: this.handleDate,
+                    checkout:this.checkout,
+                    bookCon:this.bookCon,
                 }}>
                     {this.props.children}
                 </Context.Provider>

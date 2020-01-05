@@ -37,6 +37,8 @@
     padding-bottom: 40px;
     color: #fff;
     text-align: center;
+    max-height: 200px;
+    pointer-events: none;
 }
 
 #search-form .search {

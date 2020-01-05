@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-// import firebase from 'firebase';
-import './seats.css';
 import { db } from '../firebaseConfig';
-import Nav from './nav search'
-import stering from './data/images/stering.png'
+import { Consumer } from "../context";
+import { withRouter } from "react-router-dom";
+import Nav from './nav search';
+import stering from './data/images/stering.png';
+import './seats.css';
 class Seats extends Component {
     _isMounted = false;
     constructor(props) {
@@ -14,33 +15,33 @@ class Seats extends Component {
             // for print
             seat: [],
             emptySpace: [],
-            active: [],
             classes: [],
             showDate: null,
-            seatCount: 0,
             seatNo: [],
 
-            // from search
-            date: this.props.date,
-            operator: this.props.operator,
-            key: this.props.dockey,
-            arrivalTime: this.props.arrivalTime,
-            departureTime: this.props.departureTime,
-            amount: this.props.amount,
+            // update
+            active: [],
+            seatCount: 0,
 
-            // date: 'D_3_1_2020',
-            // operator: 'Bus1',
-            // key: 'H5o2blDQkNFujyFFLt7T',
-            // amount: 1000,
-            // arrivalTime: '5:00',
-            // departureTime: '6:00',
+
+            // from search or seatmap
+            // date: this.props.date,
+            // operator: this.props.operator,
+            // key: this.props.dockey,
+            // arrivalTime: this.props.arrivalTime,
+            // departureTime: this.props.departureTime,
+            // amount: this.props.amount,
+
+            date: 'D_5_1_2020',
+            operator: 'Bus1',
+            key: 'H5o2blDQkNFujyFFLt7T',
+            amount: 1000,
+            arrivalTime: '5:00',
+            departureTime: '6:00',
         }
     }
 
     getData = () => {
-        // console.log(this.state.date)
-        // console.log(this.state.operator)
-        // console.log(this.state.key)
         let database = db.collection('Bus').doc(this.state.operator);
         database.get().then((data) => {
             let userData = data.data();
@@ -107,26 +108,12 @@ class Seats extends Component {
         this.setState({
             showDate: showDate,
         })
-        // let a = [
-        //     'a', 'a', '_', 'a', 'a',
-        //     'a', 'a', '_', 'a', 'a',
-        //     'a', 'a', '_', 'a', 'a',
-        //     'a', 'a', '_', 'a', 'a',
-        //     'a', 'a', '_', 'a', 'a',
-        //     'a', 'a', '_', 'a', 'a',
-        //     'a', 'a', '_', 'a', 'a',
-        //     'a', 'a', '_', 'a', 'a',
-        //     'a', 'a', '_', 'a', 'a',
-        //     'a', 'a', 'a', 'a', 'a',
-        // ]
-        // console.log(a.length)
-        // console.log(a.join(''))
     }
 
     componentWillUnmount() {
-        this.setState({
-            operator: null,
-        })
+        // this.setState({
+        // operator: null,
+        // })
         this._isMounted = false;
     }
 
@@ -155,7 +142,6 @@ class Seats extends Component {
             }
         }
 
-        // classesArray[i] = classesArray[i] === 'active' ? 'available' : 'active';
         if (classesArray[i] === 'active') {
             classesArray[i] = 'available';
             this.setState({
@@ -171,7 +157,6 @@ class Seats extends Component {
             }
         }
 
-        // active[i] = active[i] === 'a' ? 'r' : 'a';
         if (active[i] === 'a') {
             if (this.state.seatCount < 6) {
                 active[i] = 'r';
@@ -191,93 +176,90 @@ class Seats extends Component {
         })
     }
 
-    updateClick = () => {
-        let seatCode = this.state.active;
-        seatCode = seatCode.join('')
-        let ref = db.collection('Bus').doc(this.state.operator)
-            .collection('Data').doc(this.state.key)
-            .collection('Book').doc(this.state.date);
-        ref.get().then((doc) => {
-            ref.update({
-                seatCode: seatCode,
-                availabelSeats: doc.data().availabelSeats - this.state.seatCount,
-            })
-        })
-    }
-
     render() {
         return (
-            <div id='seatmap'>
-                <Nav />
-                <div className='col-md-9 seatmap p-4'>
-                    <h5 className='mb-4'><b>Route - </b>FAISALABAD to RAWALPINDI</h5>
-                    <div className='row'>
-                        <div className='container-seatplan col-md-6 border-right mb-4'>
-                            <div className='seatplan'>
-                                <div className="stering">
-                                    <img src={stering} alt='stering' />
-                                </div>
-                                <div>
-                                    {this.state.seat.map((x, i) =>
-                                        <div className={'seat ' + this.state.classes[i]}
-                                            key={i} onClick={e => this.updateHandler(i, x)}>{x}</div>
-                                    )}
+            <Consumer>
+                {(value) => {
+                    return (
+                        <div id='seatmap'>
+                            <Nav />
+                            <div className='col-md-9 seatmap p-4'>
+                                <h5 className='mb-4'><b>Route - </b>FAISALABAD to RAWALPINDI</h5>
+                                <div className='row'>
+                                    <div className='container-seatplan col-md-6 border-right mb-4'>
+                                        <div className='seatplan'>
+                                            <div className="stering">
+                                                <img src={stering} alt='stering' />
+                                            </div>
+                                            <div>
+                                                {this.state.seat.map((x, i) =>
+                                                    <div className={'seat ' + this.state.classes[i]}
+                                                        key={i} onClick={e => this.updateHandler(i, x)}>{x}</div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='col-md-6 pl-4'>
+                                        <h5 className='text-primary font-weight-bold'>Booking Details</h5>
+                                        <div className='mt-4'>
+                                            <p>
+                                                <b>Service: </b>{this.state.operator}<br />
+                                                <b>Departure Date: </b>{this.state.showDate}<br />
+                                                <b>Arrival Time: </b>{this.state.arrivalTime}<br />
+                                                <b>Departure Time: </b>{this.state.departureTime}
+                                            </p>
+                                        </div>
+                                        <div className='mt-4'>
+                                            <p>Please select your seats</p>
+                                            <div className='ligands d-flex flex-wrap'>
+                                                <div className='d-flex align-items-center'>
+                                                    <div className='ligand reserved'></div>
+                                                    <small>Available</small>
+                                                </div>
+                                                <div className='d-flex align-items-center'>
+                                                    <div className='ligand available'></div>
+                                                    <small>Reserved</small>
+                                                </div>
+                                                <div className='d-flex align-items-center'>
+                                                    <div className='ligand active'></div>
+                                                    <small>Selected</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className='mt-5'>
+                                            <div className="row m-0">
+                                                <div className='col-md-4 p-0 pr-4'>
+                                                    <h6 className='font-weight-bold text-primary'>Selected</h6>
+                                                    <span className='font-weight-bold text-muted'>{this.state.seatCount}</span>
+                                                </div>
+                                                <div className='col-md-4 p-0 pr-4'>
+                                                    <h6 className='font-weight-bold text-primary'>Seats No.</h6>
+                                                    <span className='font-weight-bold text-muted'>{this.state.seatNo.length === 0 ? '0 Seats' : this.state.seatNo.sort(function (a, b) { return a - b }).join(', ')}</span>
+                                                </div>
+                                                <div className='col-md-4 p-0 pr-4'>
+                                                    <h6 className='font-weight-bold text-primary'>Amount</h6>
+                                                    <span className='font-weight-bold text-muted'>Rs: {this.state.amount * this.state.seatCount}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className='w-100 mt-5 button'>
+                                            {this.state.seatCount <= 0 ?
+                                                <button className='btn btn-sm btn-blue rounded' disabled={true}>Book</button> :
+                                                <button className='btn btn-sm btn-blue rounded' onClick={() => {
+                                                    value.checkout(this.state.active, this.state.seatCount,this.state.amount,this.state.showDate);
+                                                    this.props.history.push('/checkout');
+                                                }}>Book</button>
+                                            }
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div className='col-md-6 pl-4'>
-                            <h5 className='text-primary font-weight-bold'>Booking Details</h5>
-                            <div className='mt-4'>
-                                <p>
-                                    <b>Service: </b>{this.state.operator}<br />
-                                    <b>Departure Date: </b>{this.state.showDate}<br />
-                                    <b>Arrival Time: </b>{this.state.arrivalTime}<br />
-                                    <b>Departure Time: </b>{this.state.departureTime}
-                                </p>
-                            </div>
-                            <div className='mt-4'>
-                                <p>Please select your seats</p>
-                                <div className='ligands d-flex flex-wrap'>
-                                    <div className='d-flex align-items-center'>
-                                        <div className='ligand reserved'></div>
-                                        <small>Available</small>
-                                    </div>
-                                    <div className='d-flex align-items-center'>
-                                        <div className='ligand available'></div>
-                                        <small>Reserved</small>
-                                    </div>
-                                    <div className='d-flex align-items-center'>
-                                        <div className='ligand active'></div>
-                                        <small>Selected</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='mt-5'>
-                                <div className="row m-0">
-                                    <div className='col-md-4 p-0 pr-4'>
-                                        <h6 className='font-weight-bold text-primary'>Selected</h6>
-                                        <span className='font-weight-bold text-muted'>{this.state.seatCount}</span>
-                                    </div>
-                                    <div className='col-md-4 p-0 pr-4'>
-                                        <h6 className='font-weight-bold text-primary'>Seats No.</h6>
-                                        <span className='font-weight-bold text-muted'>{this.state.seatNo.length === 0 ? '0 Seats' : this.state.seatNo.sort(function (a, b) { return a - b }).join(', ')}</span>
-                                    </div>
-                                    <div className='col-md-4 p-0 pr-4'>
-                                        <h6 className='font-weight-bold text-primary'>Amount</h6>
-                                        <span className='font-weight-bold text-muted'>Rs: {this.state.amount * this.state.seatCount}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='w-100 mt-5 button'>
-                                <button className='btn btn-sm btn-blue rounded' onClick={this.updateClick}>Book</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    )
+                }}
+            </Consumer>
         )
     }
-
 }
 
-export default Seats;
+export default withRouter(Seats);

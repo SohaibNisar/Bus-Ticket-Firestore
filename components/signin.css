@@ -1,33 +1,35 @@
-body {
+#signin {
     font-family: "Montserrat", sans-serif;
     background: #33b5e5;
+    min-width: 100%;
+    min-height: 100vh;
 }
 
-.container {
+#signin .container {
     max-width: 900px;
 }
 
-a {
+#signin a {
     display: inline-block;
     text-decoration: none;
 }
 
-input {
+#signin input {
     outline: none !important;
 }
 
-h1 {
+#signin h1 {
     text-align: center;
     text-transform: uppercase;
     margin-bottom: 40px;
     font-weight: 700;
 }
 
-section#formHolder {
+#signin section#formHolder {
     padding: 50px 0;
 }
 
-.brand {
+#signin .brand {
     padding: 20px;
     /* background: url(https://goo.gl/A0ynht); */
     /* background-size: cover; */
@@ -40,11 +42,11 @@ section#formHolder {
     z-index: 9999;
 }
 
-.brand.active {
+#signin .brand.active {
     width: 100%;
 }
 
-.brand::before {
+#signin .brand::before {
     content: "";
     display: block;
     width: 100%;
@@ -56,7 +58,7 @@ section#formHolder {
     z-index: -1;
 }
 
-.brand a.logo {
+#signin .brand a.logo {
     color: #33b5e5;
     font-size: 20px;
     font-weight: 700;
@@ -64,14 +66,14 @@ section#formHolder {
     line-height: 1em;
 }
 
-.brand a.logo span {
+#signin .brand a.logo span {
     font-size: 30px;
     color: #fff;
     transform: translateX(-5px);
     display: inline-block;
 }
 
-.brand .heading {
+#signin .brand .heading {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -80,20 +82,20 @@ section#formHolder {
     transition: all 0.6s;
 }
 
-.brand .heading.active {
+#signin .brand .heading.active {
     top: 100px;
     left: 100px;
     transform: translate(0);
 }
 
-.brand .heading h2 {
+#signin .brand .heading h2 {
     font-size: 60px;
     font-weight: 700;
     text-transform: uppercase;
     margin-bottom: 0;
 }
 
-.brand .heading p {
+#signin .brand .heading p {
     font-size: 15px;
     font-weight: 300;
     text-transform: uppercase;
@@ -102,7 +104,7 @@ section#formHolder {
     font-family: "Raleway", sans-serif;
 }
 
-.brand .success-msg {
+#signin .brand .success-msg {
     width: 100%;
     text-align: center;
     position: absolute;
@@ -112,13 +114,13 @@ section#formHolder {
     margin-top: 60px;
 }
 
-.brand .success-msg p {
+#signin .brand .success-msg p {
     font-size: 25px;
     font-weight: 400;
     font-family: "Raleway", sans-serif;
 }
 
-.brand .success-msg a {
+#signin .brand .success-msg a {
     font-size: 12px;
     text-transform: uppercase;
     padding: 8px 30px;
@@ -128,22 +130,22 @@ section#formHolder {
     border-radius: 30px;
 }
 
-.brand .success-msg p, .brand .success-msg a {
+#signin .brand .success-msg p, #signin .brand .success-msg a {
     transition: all 0.9s;
     transform: translateY(20px);
     opacity: 0;
 }
 
-.brand .success-msg p.active, .brand .success-msg a.active {
+#signin .brand .success-msg p.active, #signin .brand .success-msg a.active {
     transform: translateY(0);
     opacity: 1;
 }
 
-.form {
+#signin .form {
     position: relative;
 }
 
-.form .form-peice {
+#signin .form .form-peice {
     background: #fff;
     min-height: 480px;
     margin-top: 30px;
@@ -158,13 +160,13 @@ section#formHolder {
     overflow: hidden;
 }
 
-.form .form-peice.switched {
+#signin .form .form-peice.switched {
     transform: translateX(-100%);
     width: 100%;
     left: 0;
 }
 
-.form form {
+#signin .form form {
     padding: 0 40px;
     margin: 0;
     width: 70%;
@@ -174,20 +176,20 @@ section#formHolder {
     transform: translate(-50%, -50%);
 }
 
-.form form .form-group {
+#signin .form form .form-group {
     margin-bottom: 5px;
     position: relative;
 }
 
-.form form .form-group.hasError input {
+#signin .form form .form-group.hasError input {
     border-color: #33b5e5 !important;
 }
 
-.form form .form-group.hasError label {
+#signin .form form .form-group.hasError label {
     color: #33b5e5 !important;
 }
 
-.form form label {
+#signin .form form label {
     font-size: 12px;
     font-weight: 400;
     text-transform: uppercase;
@@ -198,17 +200,17 @@ section#formHolder {
     z-index: -1;
 }
 
-.form form label.active {
+#signin .form form label.active {
     transform: translateY(10px);
     font-size: 10px;
 }
 
-.form form label.fontSwitch {
+#signin .form form label.fontSwitch {
     font-family: "Raleway", sans-serif !important;
     font-weight: 600;
 }
 
-.form form input:not([type=submit]) {
+#signin .form form input:not([type=submit]) {
     background: none;
     outline: none;
     border: none;
@@ -222,11 +224,11 @@ section#formHolder {
     z-index: 1;
 }
 
-.form form input:not([type=submit]).hasError {
+#signin .form form input:not([type=submit]).hasError {
     border-color: #33b5e5;
 }
 
-.form form span.error {
+#signin .form form span.error {
     color: #33b5e5;
     font-family: "Montserrat", sans-serif;
     font-size: 12px;
@@ -236,17 +238,17 @@ section#formHolder {
     display: none;
 }
 
-.form form input[type=password] {
+#signin .form form input[type=password] {
     color: #33b5e5;
 }
 
-.form form .CTA {
+#signin .form form .CTA {
     margin-top: 30px;
     width: 100%;
     text-align: center;
 }
 
-.form form .CTA input {
+#signin .form form .CTA input {
     font-size: 12px;
     text-transform: uppercase;
     padding: 5px 30px;
@@ -258,7 +260,7 @@ section#formHolder {
     font-family: "Montserrat", sans-serif;
 }
 
-.form form .CTA a.switch {
+#signin .form form .CTA a.switch {
     font-size: 13px;
     font-weight: 400;
     font-family: "Montserrat", sans-serif;
@@ -267,63 +269,63 @@ section#formHolder {
     transition: all 0.3s;
 }
 
-.form form .CTA a.switch:hover {
+#signin form .CTA a.switch:hover {
     color: #33b5e5;
 }
 
 @media (max-width: 768px) {
-    .container {
+    #signin .container {
         overflow: hidden;
     }
-    section#formHolder {
+    #signin section#formHolder {
         padding: 0;
     }
-    .brand .heading h2 {
+    #signin .brand .heading h2 {
         font-size: 50px;
     }
-    section#formHolder div.brand {
+    #signin section#formHolder div.brand {
         min-height: 200px !important;
     }
-    section#formHolder div.brand.active {
+    #signin section#formHolder div.brand.active {
         min-height: 100vh !important;
     }
-    section#formHolder div.brand .heading.active {
+    #signin section#formHolder div.brand .heading.active {
         top: 200px;
         left: 50%;
         transform: translate(-50%, -50%);
     }
-    section#formHolder div.brand .success-msg p {
+    #signin section#formHolder div.brand .success-msg p {
         font-size: 16px;
     }
-    section#formHolder div.brand .success-msg a {
+    #signin section#formHolder div.brand .success-msg a {
         padding: 5px 30px;
         font-size: 10px;
     }
-    section#formHolder .form {
+    #signin section#formHolder .form {
         width: 80vw;
         min-height: 500px;
     }
-    section#formHolder .form .form-peice {
+    #signin section#formHolder .form .form-peice {
         margin: 0;
         top: 0;
         left: 0;
         width: 100% !important;
         transition: all 0.5s ease-in-out;
     }
-    section#formHolder .form .form-peice.switched {
+    #signin section#formHolder .form .form-peice.switched {
         transform: translateY(-100%);
         width: 100%;
         left: 0;
     }
-    section#formHolder .form .form-peice>form {
+    #signin section#formHolder .form .form-peice>form {
         width: 100% !important;
         padding: 60px;
         left: 50%;
     }
-    .form form .CTA input {
+    #signin .form form .CTA input {
         margin-right: 0;
     }
-    .form form .CTA a.switch {
+    #signin .form form .CTA a.switch {
         display: block;
         margin-top: 10px;
         margin-bottom: 30px;
@@ -331,11 +333,11 @@ section#formHolder {
 }
 
 @media (max-width: 480px) {
-    section#formHolder .form {
+    #signin section#formHolder .form {
         width: 100vw;
         margin-left: 0;
     }
-    h2 {
+    #signin h2 {
         font-size: 45px !important;
     }
 }

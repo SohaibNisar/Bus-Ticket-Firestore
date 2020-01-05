@@ -1,8 +1,21 @@
 import React, { Component } from 'react';
 import Seats from './seats';
-import { Consumer } from '../context'
+import { Consumer } from '../context';
+// import { firebase } from "../firebaseConfig";
 
 export default class seatmap extends Component {
+    componentDidMount() {
+        // firebase.auth().onAuthStateChanged((user) => {
+        //     // let location = useLocation();
+        //     if (!user) {
+        //         // alert()
+        //         this.props.history.push('/');
+        //     }
+        //     // else {
+
+        //     // }
+        // });
+    }
     render() {
         return (
             <Consumer>

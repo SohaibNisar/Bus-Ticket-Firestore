@@ -1,8 +1,19 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import './nav search.css';
+import { firebase } from "../firebaseConfig";
 
 export default class nav extends Component {
+
+    signOut = () => {
+        firebase.auth().signOut().then(function () {
+            // Sign-out successful.
+        }).catch(function (error) {
+            var errorMessage = error.message;
+            alert(errorMessage)
+        });
+    }
+
     render() {
         return (
             <div id='search-form-nav' >
@@ -27,8 +38,8 @@ export default class nav extends Component {
                                     My Account
                                                 </Link>
                                 <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                                    <Link className="dropdown-item" to="signin">Login</Link>
                                     <Link className="dropdown-item" to="signin">Sign Up</Link>
+                                    <Link className="dropdown-item" to="#" onClick={this.signOut}>Sign Out</Link>
                                 </div>
                             </li>
                             <li className="nav-item dropdown">
