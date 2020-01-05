@@ -23,26 +23,25 @@ class Seats extends Component {
             active: [],
             seatCount: 0,
 
-
             // from search or seatmap
-            // date: this.props.date,
-            // operator: this.props.operator,
-            // key: this.props.dockey,
-            // arrivalTime: this.props.arrivalTime,
-            // departureTime: this.props.departureTime,
-            // amount: this.props.amount,
+            date: this.props.date,
+            bus: this.props.bus,
+            key: this.props.dockey,
+            arrivalTime: this.props.arrivalTime,
+            departureTime: this.props.departureTime,
+            amount: this.props.amount,
 
-            date: 'D_5_1_2020',
-            operator: 'Bus1',
-            key: 'H5o2blDQkNFujyFFLt7T',
-            amount: 1000,
-            arrivalTime: '5:00',
-            departureTime: '6:00',
+            // date: 'D_6_1_2020',
+            // bus: 'Bus1',
+            // key: 'H5o2blDQkNFujyFFLt7T',
+            // amount: 1000,
+            // arrivalTime: '5:00',
+            // departureTime: '6:00',
         }
     }
 
     getData = () => {
-        let database = db.collection('Bus').doc(this.state.operator);
+        let database = db.collection('Bus').doc(this.state.bus);
         database.get().then((data) => {
             let userData = data.data();
             database.collection('Data').doc(this.state.key).collection('Book').doc(this.state.date).get()
@@ -111,9 +110,6 @@ class Seats extends Component {
     }
 
     componentWillUnmount() {
-        // this.setState({
-        // operator: null,
-        // })
         this._isMounted = false;
     }
 
@@ -203,7 +199,7 @@ class Seats extends Component {
                                         <h5 className='text-primary font-weight-bold'>Booking Details</h5>
                                         <div className='mt-4'>
                                             <p>
-                                                <b>Service: </b>{this.state.operator}<br />
+                                                <b>Service: </b>{this.state.bus}<br />
                                                 <b>Departure Date: </b>{this.state.showDate}<br />
                                                 <b>Arrival Time: </b>{this.state.arrivalTime}<br />
                                                 <b>Departure Time: </b>{this.state.departureTime}
@@ -246,7 +242,7 @@ class Seats extends Component {
                                             {this.state.seatCount <= 0 ?
                                                 <button className='btn btn-sm btn-blue rounded' disabled={true}>Book</button> :
                                                 <button className='btn btn-sm btn-blue rounded' onClick={() => {
-                                                    value.checkout(this.state.active, this.state.seatCount,this.state.amount,this.state.showDate);
+                                                    value.checkout(this.state.active, this.state.seatCode, this.state.seatCount, this.state.amount * this.state.seatCount, this.state.showDate, this.state.seatNo);
                                                     this.props.history.push('/checkout');
                                                 }}>Book</button>
                                             }

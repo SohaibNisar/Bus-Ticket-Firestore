@@ -77,8 +77,8 @@ class Form extends Component {
 
 
     search = () => {
-        let ref = db.collectionGroup('location')
-            .where('from', '==', 'A').where('to', '==', 'B')
+        let ref = db.collectionGroup('Data')
+            .where('from', '==', 'Karachi').where('to', '==', 'Lahore')
         ref.get().then((querySnapshot) => {
             let details = [];
             querySnapshot.forEach(function (doc) {
@@ -122,14 +122,14 @@ class Form extends Component {
                 <div>
                     {this.state.details && this.state.details.map((x, i) => {
                         return (
-                            <div className='row' key={i}>
+                            <div key={i}>
                                 <div>{x.name}</div>
                                 <div>Departure Time: {x.departureTime}</div>
                                 <div>Arrivali Time: {x.arrivalTime}</div>
                                 <div>Rs. {x.amount}</div>
-                                <div className="accordion" id="Bus_List">
+                                <div>
                                     <button className="btn btn-default" type="button"  onClick={() => this.book(x.name)} data-toggle="collapse" data-target={"#collapse" + i} aria-expanded="true" aria-controls={"collapse" + i}>Book</button>
-                                    <div id={"collapse" + i} className="collapse hide" aria-labelledby="headingOne" data-parent="#Bus_List">
+                                    <div>
                                         {this.state.date && <Seats bus={x.name} date={this.state.date} />}
 
                                     </div>

@@ -52,7 +52,7 @@ export default class Crousel extends Component {
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div className='col-6 col-md-2 form-group p-0 m-0'>
+                                                    <div className='col-md-3 form-group p-0 m-0'>
                                                         <div className='form-group'>
                                                             <span className="form-label">Date</span>
                                                             <span className="far fa-calendar-alt icon"></span>
@@ -64,18 +64,7 @@ export default class Crousel extends Component {
                                                             />
                                                         </div>
                                                     </div>
-                                                    <div className='col-6 col-md-2 form-group p-0 m-0'>
-                                                        <div className='form-group not'>
-                                                            <span className="form-label">Bus</span>
-                                                            <select className="form-control" name='operator' onChange={value.handleChange}>
-                                                                <option>Select Bus</option>
-                                                                <option>Bus1</option>
-                                                                <option>Bus2</option>
-                                                                <option>Bus3</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div className='col-md-2 form-group p-0 m-0'>
+                                                    <div className='col-md-3 form-group p-0 m-0'>
                                                         <div className='form-group'>
                                                             <span className="form-label">&nbsp;</span>
                                                             <button type="button" className='btn-block' id='search' onClick={value.search}>Search</button>

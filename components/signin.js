@@ -163,7 +163,6 @@ class Signin extends Component {
                     })
                 })
                 .catch(function (error) {
-                    // var errorCode = error.code;
                     var errorMessage = error.message;
                     alert(errorMessage);
                 });
@@ -171,19 +170,10 @@ class Signin extends Component {
         });
 
         firebase.auth().onAuthStateChanged((user) => {
-            // let location = useLocation();
             if (user) {
-                // console.log(user.uid)
                 this.props.history.goBack();
                 // this.props.history.push('/');
             }
-            // else {
-                // console.log(location.pathname)
-                // this.props.history.goBack();
-                // if (location.pathname==='/seatmap') {
-                    // this.props.history.goBack();
-                // }
-            // }
         });
     }
 

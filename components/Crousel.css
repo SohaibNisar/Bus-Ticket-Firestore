@@ -51,6 +51,10 @@
     background: rgba(0, 0, 0, 0);
 }
 
+#search-form .search-ground .react-datepicker-wrapper {
+    width: 100%;
+}
+
 @media (max-width: 767px) {
     #search-form .carousel-caption {
         display: none!important;

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { firebase } from "../firebaseConfig";
 import { Redirect } from "react-router-dom";
 import { Consumer } from "../context";
+import Inputmask from "react-input-mask";
 import $ from "jquery";
 import './checkout.css';
 
@@ -21,7 +22,7 @@ class checkout extends Component {
         });
         $(document).ready(() => {
             $('form').submit((e) => {
-                e.preventDefault()
+                e.preventDefault();
             })
         })
 
@@ -67,19 +68,19 @@ class checkout extends Component {
                                                     <div className="personal-detail">
                                                         <div className="w-100 p-0 m-0">
                                                             <label>Name</label>
-                                                            <input type="text" name="name" className="input-text full-width" required />
+                                                            <input type="text" name="name" className="input-text full-width" onChange={value.handleChange} required />
                                                         </div>
                                                         <div className="w-100 p-0 m-0">
                                                             <label>Phone</label>
-                                                            <input type="text" name="phone" className="input-text full-width" required />
+                                                            <input type="text" name="phone" className="input-text full-width" onChange={value.handleChange} required />
                                                         </div>
                                                         <div className="w-100 p-0 m-0">
                                                             <label>Email</label>
-                                                            <input type="email" name="email" className="input-text full-width" required />
+                                                            <input type="email" name="email" className="input-text full-width" onChange={value.handleChange} required />
                                                         </div>
                                                         <div className="w-100 p-0 m-0">
                                                             <label>CNIC</label>
-                                                            <input type="text" name="cnic" id="cnic" className="input-text full-width" required placeholder="____-_______-_" maxLength={15} />
+                                                            <Inputmask  type="text" name="cnic" className="input-text full-width" mask="99999-9999999-9" onChange={value.handleChange} required />
                                                         </div>
                                                     </div>
                                                 </div>
