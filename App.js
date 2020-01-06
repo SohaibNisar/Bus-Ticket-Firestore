@@ -5,10 +5,16 @@ import Checkout from './components/checkout'
 import SignIn from "./components/signin";
 import Crousel from './components/Crousel';
 import Ticket from "./components/ticket";
+import Admin from "./components/admin/admin";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
-import 'mdbreact/dist/css/mdb.css';
 import 'bootstrap/dist/js/bootstrap.js';
+import 'mdbreact/dist/css/mdb.css';
+
+import Busmanagement from "./components/admin/busmanagement";
+import Routes from "./components/admin/routes";
+import Booking from "./components/admin/booking";
+import Users from "./components/admin/user";
 
 class App extends Component {
   render() {
@@ -20,6 +26,19 @@ class App extends Component {
           <Route exact path='/signin' component={SignIn} />
           <Route path='/seatmap' component={Seats} />
           <Route path='/ticket' component={Ticket} />
+
+          <Route
+            path="/admin"
+            render={({ match: { url } }) => (
+              <div style={{padding:'75px 0 0 60px'}}>
+                <Route path={`${url}/`} component={Admin} />
+                <Route path={`${url}/busmanagement`} component={Busmanagement} />
+                <Route path={`${url}/bookings`} component={Booking} />
+                <Route path={`${url}/routes`} component={Routes} />
+                <Route path={`${url}/users`} component={Users} />
+              </div>
+            )}
+          />
         </Switch>
 
       </div>

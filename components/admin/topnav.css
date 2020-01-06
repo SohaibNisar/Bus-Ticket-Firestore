@@ -1,0 +1,18 @@
+#topNav {
+    justify-content: unset;
+}
+
+#topNav #sidebarCollapse {
+    background: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none;
+}
+
+#topNav #sidebarCollapse i {
+    font-size: 24px;
+}
+
+#topNav .nav-link.dropdown-toggle::after {
+    position: relative !important;
+    top: 4px;
+}
