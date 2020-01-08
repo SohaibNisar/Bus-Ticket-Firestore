@@ -142,6 +142,7 @@ class Signin extends Component {
                                 name: name,
                                 phone: phone,
                                 email: email,
+                                active: true,
                             })
                         })
                         .catch(function (error) {
@@ -155,17 +156,27 @@ class Signin extends Component {
                 event.preventDefault();
                 let email = this.state.loginemail;
                 let password = this.state.loginPassword;
-                firebase.auth().signInWithEmailAndPassword(email, password)
-                .then(()=>{
-                    this.setState({
-                        loginPassword:'',
-                        loginemail:'',
-                    })
+
+                db.collection('Users').where('email', '==', email).get().then(snapshot => {
+                    snapshot.forEach( (doc) =>{
+                        if (doc.data().active) {
+                            firebase.auth().signInWithEmailAndPassword(email, password)
+                            .then(()=>{
+                                this.setState({
+                                    loginPassword:'',
+                                    loginemail:'',
+                                })
+                            })
+                            .catch(function (error) {
+                                var errorMessage = error.message;
+                                alert(errorMessage);
+                            });
+                        }
+                        else{
+                            alert('Your Account is disabled....');
+                        }
+                    });
                 })
-                .catch(function (error) {
-                    var errorMessage = error.message;
-                    alert(errorMessage);
-                });
             });
         });
 

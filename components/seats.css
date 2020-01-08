@@ -100,22 +100,25 @@
   font-size: 13px;
   line-height: 22px;
 }
+
 #seatmap .ligands .ligand.available {
   background: #003967 !important;
 }
+
 #seatmap .ligands .ligand.reserved {
   background: #1476d1 !important;
 }
+
 #seatmap .ligands .ligand.active {
   background: rgba(122, 218, 93, 0.719) !important;
 }
 
-#seatmap .button{
+#seatmap .button {
   text-align: right;
 }
 
 @media (max-width: 767px) {
-  #seatmap .button{
+  #seatmap .button {
     text-align: left;
   }
 }

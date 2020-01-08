@@ -5,7 +5,7 @@ import './topnav.css';
 class Topnav extends Component {
     render() {
         return (
-            <nav className="navbar navbar-dark fixed-top info-color" id='topNav'>
+            <nav className="navbar navbar-dark fixed-top blue-gradient" id='topNav'>
                 <button type="button" id="sidebarCollapse" className="btn btn-primary p-0">
                     <i className="fa fa-bars" />
                     <span className="sr-only">Toggle Menu</span>

@@ -6,8 +6,48 @@ import "react-datepicker/dist/react-datepicker.css";
 import './Crousel.css';
 import Nav from './nav search'
 import { Consumer } from '../context';
+import { db } from "../firebaseConfig";
 
 export default class Crousel extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            routes: []
+        }
+    }
+
+    getData = () => {
+        let colref = db.collection('Routes');
+        let details = [];
+
+        colref.get().then((docs) => {
+            let ids = [];
+            docs.forEach((x, i) => {
+                ids.push(x.id)
+            })
+
+            ids.forEach((id, i) => {
+                colref.doc(id).get().then((doc) => {
+                    let data = doc.data();
+                    details.push({
+                        doc: id,
+                        from: data.from,
+                        to: data.to,
+                    })
+                    if (id === ids[ids.length - 1]) {
+                        this.setState({
+                            routes: details,
+                        })
+                    }
+                })
+            })
+        })
+    }
+
+    componentDidMount() {
+        this.getData()
+    }
+
     render() {
         return (
             <Consumer>
@@ -34,21 +74,25 @@ export default class Crousel extends Component {
                                                             <span className="fas fa-map-marked-alt icon"></span>
                                                             <select className="form-control" name='from' onChange={value.handleChange}>
                                                                 <option>Select</option>
-                                                                <option>Karachi</option>
-                                                                <option>Lahore</option>
-                                                                <option>Multan</option>
+                                                                {this.state.routes.map((x, i) => {
+                                                                    return (
+                                                                        <option key={i}>{x.from}</option>
+                                                                    )
+                                                                })}
                                                             </select>
                                                         </div>
                                                     </div>
                                                     <div className='col-md-3 form-group p-0 m-0'>
                                                         <div className='form-group'>
-                                                            <span className="form-label">From City</span>
+                                                            <span className="form-label">To City</span>
                                                             <span className="fas fa-map-marked-alt icon"></span>
                                                             <select className="form-control" name='to' onChange={value.handleChange}>
                                                                 <option>Select</option>
-                                                                <option>Karachi</option>
-                                                                <option>Lahore</option>
-                                                                <option>Multan</option>
+                                                                {this.state.routes.map((x, i) => {
+                                                                    return (
+                                                                        <option key={i}>{x.to}</option>
+                                                                    )
+                                                                })}
                                                             </select>
                                                         </div>
                                                     </div>

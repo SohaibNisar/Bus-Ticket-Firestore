@@ -5,16 +5,16 @@ import Checkout from './components/checkout'
 import SignIn from "./components/signin";
 import Crousel from './components/Crousel';
 import Ticket from "./components/ticket";
-import Admin from "./components/admin/admin";
+import Admin from "./components/admin/components/admin";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.js';
 import 'mdbreact/dist/css/mdb.css';
 
-import Busmanagement from "./components/admin/busmanagement";
-import Routes from "./components/admin/routes";
-import Booking from "./components/admin/booking";
-import Users from "./components/admin/user";
+import Busmanagement from "./components/admin/pages/busmanagement";
+import Routes from "./components/admin/pages/routes";
+import Booking from "./components/admin/pages/booking";
+import Users from "./components/admin/pages/user";
 
 class App extends Component {
   render() {
@@ -30,7 +30,7 @@ class App extends Component {
           <Route
             path="/admin"
             render={({ match: { url } }) => (
-              <div style={{padding:'75px 0 0 60px'}}>
+              <div style={{padding:'56px 0 0 55px'}}>
                 <Route path={`${url}/`} component={Admin} />
                 <Route path={`${url}/busmanagement`} component={Busmanagement} />
                 <Route path={`${url}/bookings`} component={Booking} />

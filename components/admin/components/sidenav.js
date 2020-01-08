@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink } from "react-router-dom";
 import $ from "jquery";
-import './css/style.css'
 import './sidenav.css';
 
 class Sidenav extends Component {
@@ -21,31 +20,34 @@ class Sidenav extends Component {
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
             });
-            $('a.active').parent('li').addClass('active');
         })
-    }
-
-    componentDidUpdate() {
-        $('li.active').removeClass('active');
-        $('a.active').parent('li').addClass('active');
     }
 
     render() {
         return (
             <div>
                 <nav id="sidebar">
-                    <ul className="list-unstyled components mb-5">
+                    <ul className='list-unstyled components mb-5'>
                         <li>
-                            <NavLink to="/admin/busmanagement" exact activeClassName='active'><span className="fa fa-home mr-3" />Bus Management</NavLink>
+                            <NavLink to="/admin/busmanagement" exact activeClassName='active'>
+                                <span className="fas fa-bus mr-3" />
+                                <div>Bus Management</div>
+                            </NavLink>
                         </li>
                         <li>
-                            <NavLink to="/admin/bookings"><span className="fa fa-user mr-3" />Booking</NavLink>
+                            <NavLink to="/admin/bookings"><span className="fas fa-clipboard-list mr-3" />
+                                <div>Booking</div>
+                            </NavLink>
                         </li>
                         <li>
-                            <NavLink to="/admin/routes"><span className="fa fa-sticky-note mr-3" />Routes</NavLink>
+                            <NavLink to="/admin/routes"><span className="fas fa-route mr-3" />
+                                <div>Routes</div>
+                            </NavLink>
                         </li>
                         <li>
-                            <NavLink to="/admin/users"><span className="fa fa-sticky-note mr-3" />Users</NavLink>
+                            <NavLink to="/admin/users"><span className="fas fa-user mr-3" />
+                                <div>Users</div>
+                            </NavLink>
                         </li>
                     </ul>
                 </nav>

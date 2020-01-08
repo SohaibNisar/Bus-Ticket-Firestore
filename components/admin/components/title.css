@@ -1,0 +1,30 @@
+#title .main-title {
+    width: 100%;
+    background: #ffffff;
+    padding: 15px;
+    box-shadow: 1px 0 8px rgba(0, 0, 0, 0.5);
+    padding-bottom: 20px;
+}
+
+#title .main-title .text-themecolor {
+    color: #009efb;
+    line-height: 30px;
+    font-size: 21px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+}
+
+#title .main-title ol {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin: 5px 0;
+    padding: 0px;
+    background: transparent;
+    font-size: 14px;
+    margin-bottom: 0px;
+    margin-top: 0;
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    border-radius: .25rem;
+}
