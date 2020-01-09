@@ -15,6 +15,7 @@ import Busmanagement from "./components/admin/pages/busmanagement";
 import Routes from "./components/admin/pages/routes";
 import Booking from "./components/admin/pages/booking";
 import Users from "./components/admin/pages/user";
+import AdminLogin from "./components/admin/pages/login";
 
 class App extends Component {
   render() {
@@ -26,11 +27,12 @@ class App extends Component {
           <Route exact path='/signin' component={SignIn} />
           <Route path='/seatmap' component={Seats} />
           <Route path='/ticket' component={Ticket} />
+          <Route path={'/login'} component={AdminLogin} />
 
           <Route
             path="/admin"
             render={({ match: { url } }) => (
-              <div style={{padding:'56px 0 0 55px'}}>
+              <div style={{ padding: '56px 0 0 55px' }}>
                 <Route path={`${url}/`} component={Admin} />
                 <Route path={`${url}/busmanagement`} component={Busmanagement} />
                 <Route path={`${url}/bookings`} component={Booking} />

@@ -142,6 +142,7 @@ class Signin extends Component {
                                 name: name,
                                 phone: phone,
                                 email: email,
+                                role: 'user',
                                 active: true,
                             })
                         })

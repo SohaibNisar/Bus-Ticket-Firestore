@@ -1,13 +1,32 @@
 import React, { Component } from 'react';
 import SideNav from "./sidenav";
 import TopNav from "./topnav";
+import { firebase } from '../../../firebaseConfig';
+import { Redirect } from "react-router-dom";
 
 class Admin extends Component {
-    componentDidMount() {
-        // this.props.history.push('admin/busmanagement');
+    constructor() {
+        super()
+        this.state = {
+            redirect: false,
+        }
     }
-    
+
+    componentDidMount() {
+        firebase.auth().onAuthStateChanged((user) => {
+            if (!user) {
+                this.setState({ redirect: true })
+            }
+        });
+    }
+
     render() {
+        if (this.state.redirect) {
+            return <Redirect to='/login' />;
+        }
+        else if(this.state.redirect){
+            return <Redirect to='/admin/busmanagement' />;
+        }
         return (
             <div id='admin'>
                 <TopNav />
