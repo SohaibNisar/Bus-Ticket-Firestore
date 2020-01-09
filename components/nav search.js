@@ -31,6 +31,12 @@ export default class nav extends Component {
                                     Home
                                     </Link>
                             </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/admin">
+                                    <i className="fas fa-user-tie"></i>
+                                    Admin
+                                    </Link>
+                            </li>
                             <li className="nav-item dropdown">
                                 <Link className="nav-link dropdown-toggle" to="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
@@ -40,6 +46,7 @@ export default class nav extends Component {
                                 <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                                     <Link className="dropdown-item" to="signin">Sign Up</Link>
                                     <Link className="dropdown-item" to="#" onClick={this.signOut}>Sign Out</Link>
+                                    <Link className="dropdown-item" to="admin">Admin</Link>
                                 </div>
                             </li>
                             <li className="nav-item dropdown">

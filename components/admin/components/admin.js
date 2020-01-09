@@ -24,9 +24,6 @@ class Admin extends Component {
         if (this.state.redirect) {
             return <Redirect to='/login' />;
         }
-        else if(this.state.redirect){
-            return <Redirect to='/admin/busmanagement' />;
-        }
         return (
             <div id='admin'>
                 <TopNav />

@@ -9,6 +9,7 @@ class Booking extends Component {
             bookingDetails: [],
         }
     }
+
     getData = () => {
         let colref = db.collection('Bookings');
         let details = [];
@@ -50,22 +51,46 @@ class Booking extends Component {
         })
     }
 
-    removeBooking = (doc,busid,date,setano,seats,seatCodePrevious,seatCodeUpdated) => {
+    removeBooking = (bookid, busid, bus, date, seats, seatCodePrevious, seatCodeUpdated) => {
+        let index = [];
         const arr1 = seatCodePrevious.split('');
         const arr2 = seatCodeUpdated.split('');
+        for (let i = 0; i < arr2.length; i++) {
+            if (arr1[i] !== arr2[i]) {
+                index.push(i)
+            }
+        }
+        let ref = db.collection('Bus').doc(bus).collection('Data');
+        let ref2 = ref.doc(busid).collection('Book').doc(date);
+        ref2.get().then((doc) => {
+            if (doc.exists) {
+                let data = doc.data();
+                let seatCode = data.seatCode;
+                let availabelSeats = data.availabelSeats;
 
-        let unique1 = arr1.filter((x) => arr2.indexOf(x) === -1);
-        let unique2 = arr2.filter((x) => arr1.indexOf(x) === -1);
+                seatCode = seatCode.split('');
+                for (let i = 0; i < index.length; i++) {
+                    seatCode[index[i]] = 'a';
+                }
 
-        const unique = unique1.concat(unique2);
+                seatCode = seatCode.join('');
+                availabelSeats = availabelSeats + seats;
 
-        console.log(unique);
-        // db.collection('Bookings').doc(doc).delete().then(() => {
-        //     alert('Booking Data Has Been Removed');
-        //     window.location.reload()
-        // }).catch(function (error) {
-        //     console.error("Error removing document: ", error);
-        // });
+                ref2.update({
+                    seatCode: seatCode,
+                    availabelSeats: availabelSeats,
+                }).then(() => {
+                    db.collection('Bookings').doc(bookid).delete().then(() => {
+                        alert('Booking Data Has Been Removed');
+                        window.location.reload()
+                    }).catch(function (error) {
+                        console.error("Error removing document: ", error);
+                    });
+                }).catch((error) => {
+                    alert(error.message)
+                })
+            }
+        })
     }
 
     componentDidMount() {
@@ -118,7 +143,7 @@ class Booking extends Component {
                                                     <td>{x.date}</td>
                                                     <td>{x.total}</td>
                                                     <td>
-                                                        <button className='remove btn-danger' onClick={() => this.removeBooking(x.bookingid,x.busKey,x.date,x.seatNo,x.seats,x.seatCodePrevious,x.seatCodeUpdated)}>
+                                                        <button className='remove btn-danger' onClick={() => this.removeBooking(x.bookingid, x.busKey, x.bus, x.date, x.seats, x.seatCodePrevious, x.seatCodeUpdated)}>
                                                             <i className='fas fa-times'></i>
                                                         </button>
                                                     </td>

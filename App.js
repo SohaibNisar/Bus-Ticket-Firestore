@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import Home from "./components/home";
 import Seats from './components/seatmap';
 import Checkout from './components/checkout'
 import SignIn from "./components/signin";
@@ -22,9 +23,10 @@ class App extends Component {
     return (
       <div className="App">
         <Switch>
-          <Route exact path='/' component={Crousel} />
-          <Route exact path='/checkout' component={Checkout} />
-          <Route exact path='/signin' component={SignIn} />
+          <Route exact path='/' component={Home} />
+          <Route path='/ticketBooking' component={Crousel} />
+          <Route path='/checkout' component={Checkout} />
+          <Route path='/signin' component={SignIn} />
           <Route path='/seatmap' component={Seats} />
           <Route path='/ticket' component={Ticket} />
           <Route path={'/login'} component={AdminLogin} />

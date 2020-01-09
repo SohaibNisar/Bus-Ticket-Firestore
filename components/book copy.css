@@ -1,0 +1,120 @@
+/*book us area*/
+
+
+        
+.wrapper {
+    padding: 6em 0 4em 0;
+    position: relative;
+    font-family: "Raleway", Arial, Helvetica, sans-serif;
+    text-align: center;
+    letter-spacing: 0.09em;
+    font-size: 12pt;
+}
+
+.wrapper > .inner {
+    margin: 0 auto;
+    width: 65em;
+}
+
+.wrapper h2, h3 {
+    font-weight: 300;
+    line-height: 1em;
+    margin: 0 0 1em 0;
+    text-transform: uppercase;
+    color: #555;
+    border-bottom-color: #e3e3e3;
+}
+
+
+.wrapper h3 {
+    font-size: 1.2em;
+    color: #e3e3e3;
+    
+}
+ .wrapper p {
+   
+    color: #e3e3e3; 
+}
+
+.wrapper h2 {
+    display: inline-block;
+    padding-bottom: 0.4em;
+    border-bottom-style: double;
+    border-bottom-width: 4px;
+    color: #42b3e5;
+    font-family: fantasy;
+}
+
+.features {
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    -moz-flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -moz-justify-content: center;
+    -webkit-justify-content: center;
+    -ms-justify-content: center;
+    justify-content: center;
+    margin-bottom: 2em;
+    margin-top: 4em;
+}
+
+.feature {
+    padding: 2em 2em 0.1em 2em;
+    border-style: solid;
+    border-width: 1px;
+    margin-left: -1px;
+    margin-top: -1px;
+    width: 33.33333%;
+    border-color: #e3e3e3;
+}
+
+.feature .fa {
+    font-size: 2.8em;
+    margin-bottom: 0.7em;
+    color: #00cdcf;
+}
+
+    
+    @media screen and (max-width: 480px) {
+
+        .feature {
+            padding: 2em 0.5em 0.1em 0.5em;
+            width: 100%;
+        }
+
+    }
+    
+    
+    @media screen and (max-width: 980px) {
+
+        .wrapper {
+            padding: 4em 2em 2em 2em;
+        }
+
+            .wrapper > .inner {
+                width: 100%;
+            }
+
+    }
+
+    @media screen and (max-width: 736px) {
+
+        .wrapper {
+            padding: 3em 1.5em 1em 1.5em;
+        }
+
+            
+
+    }
+
+    @media screen and (max-width: 480px) {
+
+        .wrapper {
+            padding: 2em 1em 0.1em 1em;
+        }   
+
+    }

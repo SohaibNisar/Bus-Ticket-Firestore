@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { firebase } from "../../../firebaseConfig";
 import { db } from "../../../firebaseConfig";
+import { Link } from "react-router-dom";
 
 class Login extends Component {
     constructor(props) {
@@ -20,9 +21,9 @@ class Login extends Component {
             if (snapshot.empty) {
                 alert('Wrong Email....');
             }
-            else{
+            else {
                 snapshot.forEach((doc) => {
-                    if (doc.data().role==='admin') {
+                    if (doc.data().role === 'admin') {
                         firebase.auth().signInWithEmailAndPassword(email, password)
                             .then(() => {
                                 this.setState({
@@ -56,20 +57,20 @@ class Login extends Component {
             }
         });
     }
-    
+
 
     render() {
         return (
             <div className='container-md container-fluid text-center'>
                 <div className='row justify-content-center mt-md-5 mt-3'>
                     <div className="col-md-6">
-                        <form class="text-center border border-light p-5" onSubmit={this.handlesubmit}>
-                            <p class="h4 mb-4">Admin Login</p>
-                            <p>Login With Admin Email</p>
+                        <form className="text-center border border-light p-5" onSubmit={this.handlesubmit}>
+                            <p className="h4 mb-4">Admin Login</p>
+                            <p className='font-weight-bold'>Login With Admin Email</p>
                             <input
                                 type="email"
                                 id="email"
-                                class="form-control mb-4"
+                                className="form-control mb-4"
                                 placeholder="E-mail"
                                 name="email"
                                 onChange={this.handleChange}
@@ -78,11 +79,14 @@ class Login extends Component {
                                 type="password"
                                 id="password"
                                 name="password"
-                                class="form-control mb-4"
+                                className="form-control mb-4"
                                 placeholder="Password"
                                 onChange={this.handleChange}
                             />
-                            <button class="btn btn-info btn-block" type="submit">Sign in</button>
+                            <button className="btn btn-info btn-block mb-5" type="submit">Sign in</button>
+                            <p className='font-weight-bold'>Go back To
+        <Link to="/"> Home</Link>
+                            </p>
                         </form>
                     </div>
                 </div>
