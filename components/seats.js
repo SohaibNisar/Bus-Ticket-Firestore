@@ -180,7 +180,7 @@ class Seats extends Component {
                         <div id='seatmap'>
                             <Nav />
                             <div className='col-md-9 seatmap p-4'>
-                                <h5 className='mb-4'><b>Route - </b>FAISALABAD to RAWALPINDI</h5>
+                                <h5 className='mb-4'><b>Route - </b>{value.state.from} to {value.state.to}</h5>
                                 <div className='row'>
                                     <div className='container-seatplan col-md-6 border-right mb-4'>
                                         <div className='seatplan'>

@@ -1,9 +1,10 @@
 /*         SLider Css        */
 
 .slider{
-    background-image: url('../img/bus4.jpg');
+    background-image: url('./data/images/home/bus4.jpg');
     background-repeat: no-repeat;
-    /* width: 100%; */
+    background-size: cover;
+    width: 100% ;
     height: 100vh;
     padding: 200px 100px;
     color: #42b3e5;

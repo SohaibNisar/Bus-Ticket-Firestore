@@ -30,14 +30,14 @@ body {
     background-repeat: no-repeat;
 }
 .img1{
-    background-image: url('../img/img1.jpg');
+    background-image: url('./data/images/home/img1.jpg');
 }
 .img2{
-    background-image: url('../img/img2.jpg');
+    background-image: url('./data/images/home/img2.jpg');
 }
 .img3{
     background-size: cover;
-    background-image: url('../img/img3.jpg');
+    background-image: url('./data/images/home/img3.jpg');
 }
 .single-about-detail {
     position: relative;

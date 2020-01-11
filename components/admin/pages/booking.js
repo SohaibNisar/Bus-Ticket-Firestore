@@ -7,8 +7,26 @@ class Booking extends Component {
         super(props);
         this.state = {
             bookingDetails: [],
+            filteredBooking: [],
+            q: ''
         }
     }
+
+    onChange = (event) => {
+        const q = event.target.value;
+        this.setState({ q }, () => this.filterList());
+    }
+
+    filterList = () => {
+        let bookings = this.state.bookingDetails;
+        let q = this.state.q;
+        
+        bookings = bookings.filter((bookings) => {
+            return bookings.bookingid.indexOf(q) != -1;
+        });
+        this.setState({ filteredBooking: bookings });
+    }
+
 
     getData = () => {
         let colref = db.collection('Bookings');
@@ -44,7 +62,8 @@ class Booking extends Component {
                     if (id === ids[ids.length - 1]) {
                         this.setState({
                             bookingDetails: details,
-                        })
+                            filteredUsers: details,
+                        }, () => this.filterList())
                     }
                 })
             })
@@ -96,7 +115,11 @@ class Booking extends Component {
     componentDidMount() {
         this.getData();
     }
+
     render() {
+        // const userList = this.state.filteredUsers.map(user => {
+        //     return <li>{user.name} {user.age}</li>;
+        // });
         return (
             <div>
                 <Title title='Booking' />
@@ -109,10 +132,17 @@ class Booking extends Component {
                     </ul>
                     <div className="tab-content" id="myTabContent">
                         <div className="tab-pane fade show active border p-4" id="booking-table" role="tabpanel" aria-labelledby="booking-table-tab">
+                            <div class="md-form mt-0">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Search"
+                                    aria-label="Search"
+                                    value={this.state.q}
+                                    onChange={this.onChange}
+                                />
+                            </div>
                             <div className='table-responsive text-nowrap'>
-                                <div class="md-form mt-0">
-                                    <input class="form-control" type="text" placeholder="Search" aria-label="Search" />
-                                </div>
                                 <table className="table table-hover text-center">
                                     <caption>List of Bookings</caption>
                                     <thead className='bg-info text-white'>
@@ -130,7 +160,7 @@ class Booking extends Component {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {this.state.bookingDetails.map((x, i) => {
+                                        {this.state.filteredBooking.map((x, i) => {
                                             return (
                                                 <tr key={i}>
                                                     <th scope="row">{i + 1}</th>
