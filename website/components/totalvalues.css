@@ -1,4 +1,5 @@
 /*Feedback Ratio Area*/
+
 .ratio-area {
     background-image: url('../../data/images/home/bus4.jpg');
     background-repeat: no-repeat;
@@ -6,7 +7,8 @@
     background-attachment: fixed;
     position: relative;
 }
-.ratio-area:before{
+
+.ratio-area:before {
     position: absolute;
     content: '';
     width: 100%;
@@ -15,15 +17,30 @@
     left: 0;
     background-color: #000000b3;
 }
-.ratio-area h3{
-    font-size: 68px;
+
+.ratio-area .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-weight: 1000;
     color: #fff;
     margin-top: 70px;
     margin-bottom: 20px;
+    cursor: context-menu;
 }
+
+.ratio-area .content .number {
+    font-size: 68px;
+}
+
+.ratio-area .content .icon {
+    font-size: 30px;
+}
+
 .ratio-area p {
+    text-align: center;
     color: #fff;
     font-size: 24px;
     margin-bottom: 75px;
+    cursor: context-menu;
 }

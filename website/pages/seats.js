@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { db } from '../../firebaseConfig';
 import { Consumer } from "../../context";
 import { withRouter } from "react-router-dom";
-import Nav from '../components/nav search';
+import Nav from '../components/navbar';
 import stering from '../../data/images/stering.png';
 import './seats.css';
 import Footer from '../components/footer';

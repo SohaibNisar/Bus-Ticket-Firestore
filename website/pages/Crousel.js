@@ -4,7 +4,7 @@ import Book from '../components/book';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import './Crousel.css';
-import Nav from '../components/nav search'
+import Nav from '../components/navbar'
 import { Consumer } from '../../context';
 import { db } from "../../firebaseConfig";
 import Footer from '../components/footer';

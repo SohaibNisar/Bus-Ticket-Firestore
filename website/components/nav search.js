@@ -18,7 +18,7 @@ export default class nav extends Component {
         return (
             <div id='search-form-nav' >
                 <nav className="navbar fixed-top navbar-expand-sm navbar-light white scrolling-navbar py-0">
-                    <Link className="navbar-brand" to="#"><strong>Navbar</strong></Link>
+                    <Link className="navbar-brand" to="#"><strong>Bus Ticket</strong></Link>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>

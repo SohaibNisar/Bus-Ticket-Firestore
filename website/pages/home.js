@@ -12,7 +12,7 @@ class Home extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{marginTop: 54}}>
         <Navbar />
         <Slide />
         <TopSection />
