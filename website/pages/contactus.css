@@ -1,0 +1,40 @@
+#contact .contact {
+    -webkit-border-radius: 0 .25rem .25rem 0;
+    border-radius: 0 .25rem .25rem 0;
+    background-color: #103f6d;
+}
+
+#contact .form .btn-floating {
+    float: right;
+    position: relative;
+    bottom: 3rem;
+    margin-right: 0;
+}
+
+#contact .btn-floating.btn-lg {
+    width: 61.1px;
+    height: 61.1px;
+}
+
+#contact .btn-floating {
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, .18), 0 4px 15px 0 rgba(0, 0, 0, .15);
+    z-index: 1;
+    overflow: hidden;
+    transition: all .2s ease-in-out;
+    margin: 10px;
+    border-radius: 50%;
+    padding: 0;
+    cursor: pointer;
+    vertical-align: middle !important;
+}
+
+#contact .btn-floating.btn-lg i {
+    font-size: 1.625rem;
+    line-height: 61.1px;
+}
+
+#contact .btn-floating i {
+    width: inherit;
+    text-align: center;
+    color: #fff;
+}

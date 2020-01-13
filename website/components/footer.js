@@ -40,7 +40,7 @@ export class Footer extends Component {
                                 <ul className="list-unstyled">
                                     <li>
                                         <p>
-                                            <i className="fas fa-home mr-3"></i> New York, NY 10012, US</p>
+                                            <i className="fas fa-home mr-3"></i> R6QV+RH Landhi Town, Karachi, Pakistan</p>
                                     </li>
                                     <li>
                                         <p>

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Home from "./website/pages/home";
+import Crousel from './website/pages/Crousel';
+import Gallery from './website/pages/gallery';
+import ContactUs from './website/pages/contactus';
 import Seats from './website/pages/seatmap';
 import Checkout from './website/pages/checkout'
 import SignIn from "./website/pages/signin";
-import Crousel from './website/pages/Crousel';
 import Ticket from "./website/pages/ticket";
 
 import Admin from "./admin/components/admin";
@@ -26,8 +28,8 @@ class App extends Component {
       <div className="App">
         <Switch>
           <Route exact path='/' component={Home} />
-          <Route path='/gallery' component={Crousel} />
-          <Route path='/contactus' component={Crousel} />
+          <Route path='/gallery' component={Gallery} />
+          <Route path='/contactus' component={ContactUs} />
           <Route path='/ticketBooking' component={Crousel} />
           <Route path='/checkout' component={Checkout} />
           <Route path='/signin' component={SignIn} />
