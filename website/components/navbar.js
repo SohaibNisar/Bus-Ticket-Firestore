@@ -19,7 +19,7 @@ class Navbar extends Component {
       <div id='home-nav'>
         <header >
           <nav className="navbar navbar-expand-lg navbar-dark fixed-top nav-color">
-            <a className="navbar-brand" href="#"> <strong>Bus<br /> Ticket </strong></a>
+            <Link className="navbar-brand" to="/"> <strong>Bus<br /> Ticket </strong></Link>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon" />
             </button>
