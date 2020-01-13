@@ -20,7 +20,7 @@ class Booking extends Component {
     filterList = () => {
         let bookings = this.state.bookingDetails;
         let q = this.state.q;
-        
+
         bookings = bookings.filter((bookings) => {
             return bookings.bookingid.indexOf(q) != -1;
         });
@@ -117,9 +117,6 @@ class Booking extends Component {
     }
 
     render() {
-        // const userList = this.state.filteredUsers.map(user => {
-        //     return <li>{user.name} {user.age}</li>;
-        // });
         return (
             <div>
                 <Title title='Booking' />
@@ -136,7 +133,7 @@ class Booking extends Component {
                                 <input
                                     type="text"
                                     class="form-control"
-                                    placeholder="Search"
+                                    placeholder="Search By Booking Id"
                                     aria-label="Search"
                                     value={this.state.q}
                                     onChange={this.onChange}
@@ -156,25 +153,26 @@ class Booking extends Component {
                                             <th>Drop Point</th>
                                             <th>Booking Date</th>
                                             <th>Amount</th>
-                                            <th>Board Time</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {this.state.filteredBooking.map((x, i) => {
                                             return (
                                                 <tr key={i}>
-                                                    <th scope="row">{i + 1}</th>
-                                                    <td>{x.bookingid}</td>
-                                                    <td>{x.name}</td>
-                                                    <td>{x.email}</td>
-                                                    <td>{x.cnic}</td>
-                                                    <td>{x.from}</td>
-                                                    <td>{x.to}</td>
-                                                    <td>{x.date}</td>
-                                                    <td>{x.total}</td>
-                                                    <td>
-                                                        <button className='remove btn-danger' onClick={() => this.removeBooking(x.bookingid, x.busKey, x.bus, x.date, x.seats, x.seatCodePrevious, x.seatCodeUpdated)}>
-                                                            <i className='fas fa-times'></i>
+                                                    <th scope="row" className='align-middle'>{i + 1}</th>
+                                                    <td className='align-middle'>{x.bookingid}</td>
+                                                    <td className='align-middle'>{x.name}</td>
+                                                    <td className='align-middle'>{x.email}</td>
+                                                    <td className='align-middle'>{x.cnic}</td>
+                                                    <td className='align-middle'>{x.from}</td>
+                                                    <td className='align-middle'>{x.to}</td>
+                                                    <td className='align-middle'>{x.date}</td>
+                                                    <td className='align-middle'>{x.total}</td>
+                                                    <td className='align-middle'>
+                                                        <button className='remove btn btn-sm btn-danger' onClick={() => this.removeBooking(x.bookingid, x.busKey, x.bus, x.date, x.seats, x.seatCodePrevious, x.seatCodeUpdated)}>
+                                                            {/* <i className='fas fa-times'></i> */}
+                                                            Cancel Ticket
                                                         </button>
                                                     </td>
                                                 </tr>

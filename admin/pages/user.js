@@ -29,6 +29,7 @@ class Users extends Component {
                         name: data.name,
                         phone: data.phone,
                         email: data.email,
+                        role: data.role,
                         checked: data.active,
                     })
                     if (id === ids[ids.length - 1]) {
@@ -51,7 +52,7 @@ class Users extends Component {
             if (checked) {
                 alert('Account Activated.')
             }
-            else{
+            else {
                 alert('Account Disabled.')
             }
         })
@@ -86,6 +87,7 @@ class Users extends Component {
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Mobile</th>
+                                            <th>Role</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -93,11 +95,12 @@ class Users extends Component {
                                         {this.state.userDetails.map((x, i) => {
                                             return (
                                                 <tr key={i}>
-                                                    <th scope="row">{i + 1}</th>
-                                                    <td>{x.name}</td>
-                                                    <td>{x.email}</td>
-                                                    <td>{x.phone}</td>
-                                                    <td>
+                                                    <th className='align-middle' scope="row">{i + 1}</th>
+                                                    <td className='align-middle'>{x.name}</td>
+                                                    <td className='align-middle'>{x.email}</td>
+                                                    <td className='align-middle'>{x.phone}</td>
+                                                    <td className='align-middle'>{x.role}</td>
+                                                    <td className='align-middle'>
                                                         <div className="custom-control custom-switch">
                                                             <input type="checkbox" className="custom-control-input" id="customSwitches" checked={x.checked} onChange={(e) => this.disableUser(e, x.id, i)} />
                                                             <label className="custom-control-label" htmlFor="customSwitches"  >{x.checked ? 'Click To Disable' : 'Click To Active'}</label>

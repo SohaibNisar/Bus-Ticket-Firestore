@@ -214,14 +214,15 @@ class BusManagement extends Component {
                                         {busDetails.map((x, i) => {
                                             return (
                                                 <tr key={i}>
-                                                    <th scope="row">{i + 1}</th>
-                                                    <td>{x.name}</td>
-                                                    <td>{x.seats}</td>
-                                                    <td>{x.startPoint}</td>
-                                                    <td>{x.endPoint}</td>
-                                                    <td>
-                                                        <button className='remove btn-danger' onClick={() => this.removeBus(x.name)}>
-                                                            <i className='fas fa-times'></i>
+                                                    <th className='align-middle' scope="row">{i + 1}</th>
+                                                    <td className='align-middle'>{x.name}</td>
+                                                    <td className='align-middle'>{x.seats}</td>
+                                                    <td className='align-middle'>{x.startPoint}</td>
+                                                    <td className='align-middle'>{x.endPoint}</td>
+                                                    <td className='align-middle'>
+                                                        <button className='remove btn btn-sm btn-danger' onClick={() => this.removeBus(x.name)}>
+                                                            {/* <i className='fas fa-times'></i> */}
+                                                            Remove Bus
                                                         </button>
                                                     </td>
                                                 </tr>

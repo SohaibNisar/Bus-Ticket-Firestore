@@ -138,11 +138,12 @@ class Routes extends Component {
                                                     if (x.from && x.from) {
                                                         return (
                                                             <tr key={i}>
-                                                                <th scope="row">{i + 1}</th>
-                                                                <td>{x.from}</td>
-                                                                <td>
-                                                                    <button className='remove btn-danger' onClick={() => this.removeRoute('location1', x.fromKey)}>
-                                                                        <i className='fas fa-times'></i>
+                                                                <th className='align-middle' scope="row">{i + 1}</th>
+                                                                <td className='align-middle'>{x.from}</td>
+                                                                <td className='align-middle'>
+                                                                    <button className='remove btn btn-sm btn-danger' onClick={() => this.removeRoute('location1', x.fromKey)}>
+                                                                        {/* <i className='fas fa-times'></i> */}
+                                                                        Remove
                                                                     </button>
                                                                 </td>
                                                             </tr>
@@ -169,11 +170,12 @@ class Routes extends Component {
                                                     if (x.to && x.to) {
                                                         return (
                                                             <tr key={i}>
-                                                                <th scope="row">{i + 1}</th>
-                                                                <td>{x.to}</td>
-                                                                <td>
-                                                                    <button className='remove btn-danger' onClick={() => this.removeRoute('location2', x.toKey)}>
-                                                                        <i className='fas fa-times'></i>
+                                                                <th className='align-middle' scope="row">{i + 1}</th>
+                                                                <td className='align-middle'>{x.to}</td>
+                                                                <td className='align-middle'>
+                                                                    <button className='remove btn btn-sm btn-danger' onClick={() => this.removeRoute('location2', x.toKey)}>
+                                                                        {/* <i className='fas fa-times'></i> */}
+                                                                        Remove
                                                                     </button>
                                                                 </td>
                                                             </tr>

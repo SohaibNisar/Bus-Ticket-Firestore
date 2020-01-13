@@ -3,7 +3,8 @@ import Navbar from '../components/navbar';
 import Slide from '../components/slider';
 import About from '../components/about';
 import TopSection from '../components/topsection';
-import NewsLetter from '../components/newsletter';
+// import NewsLetter from '../components/newsletter';
+import BottomSection from "../components/bottomsection";
 import Ratio from '../components/totalvalues';
 import Features from '../components/features';
 import Footer from '../components/footer';
@@ -12,14 +13,15 @@ class Home extends Component {
 
   render() {
     return (
-      <div style={{marginTop: 54}}>
+      <div style={{ marginTop: 54 }}>
         <Navbar />
         <Slide />
         <TopSection />
         <About />
         <Ratio />
         <Features />
-        <NewsLetter />
+        <BottomSection />
+        {/* <NewsLetter /> */}
         <Footer />
       </div>
     );
