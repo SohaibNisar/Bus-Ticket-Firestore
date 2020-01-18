@@ -120,9 +120,30 @@ class BusManagement extends Component {
     }
 
     removeBus = (doc) => {
-        db.collection('Bus').doc(doc).delete().then(() => {
-            alert('Bus Data Has Been Removed');
-            window.location.reload()
+        let refBus = db.collection('Bus').doc(doc);
+        let refBusData = refBus.collection('Data');
+        let batch = db.batch();
+        // db.collection('Bus').doc(doc).delete().then(() => {
+        //     alert('Bus Data Has Been Removed');
+        //     window.location.reload()
+        // }).catch(function (error) {
+        //     console.error("Error removing document: ", error);
+        // });
+
+        refBusData.get().then((snapshot) => {
+            snapshot.docs.forEach(doc => {
+                batch.delete(refBusData.doc(doc.id));
+            })
+            batch.delete(refBus)
+
+            return batch.commit()
+                .then(data => {
+                    alert('Bus Data Has Been Removed');
+                    window.location.reload()
+                })
+                .catch(error => {
+                    alert(error.message)
+                })
         }).catch(function (error) {
             console.error("Error removing document: ", error);
         });

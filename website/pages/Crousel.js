@@ -13,36 +13,28 @@ export default class Crousel extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            routes: [],
+            from: [],
+            to: [],
         }
     }
 
     getData = () => {
         let fromref = db.collection('Routes').doc('location1');
         let toref = db.collection('Routes').doc('location2');
-        let from = [];
-        let to = []
-        let routes = [];
 
         fromref.get().then(doc => {
             let data = doc.data();
-            from = Object.values(data);
-            toref.get().then(doc => {
-                let data = doc.data();
-                to = Object.values(data);
+            let from = Object.values(data);
+            this.setState({
+                from: from,
+            })
+        })
 
-                from.forEach((x, i) => {
-                    return (
-                        routes.push({
-                            from: x,
-                            to: to[i],
-                        })
-                    )
-                })
-
-                this.setState({
-                    routes: routes,
-                })
+        toref.get().then(doc => {
+            let data = doc.data();
+            let to = Object.values(data);
+            this.setState({
+                to: to,
             })
         })
     }
@@ -52,7 +44,7 @@ export default class Crousel extends Component {
     }
 
     render() {
-        const { routes } = this.state;
+        const { from, to } = this.state;
         return (
             <Consumer>
                 {(value) => {
@@ -78,9 +70,9 @@ export default class Crousel extends Component {
                                                             <span className="fas fa-map-marked-alt icon"></span>
                                                             <select className="form-control" name='from' onChange={value.handleChange}>
                                                                 <option>Select</option>
-                                                                {routes.length > 0 && routes.sort().map((x, i) => {
+                                                                {from.length > 0 && from.sort().map((x, i) => {
                                                                     return (
-                                                                        <option key={i}>{x.from}</option>
+                                                                        <option key={i}>{x}</option>
                                                                     )
                                                                 })}
                                                             </select>
@@ -92,9 +84,9 @@ export default class Crousel extends Component {
                                                             <span className="fas fa-map-marked-alt icon"></span>
                                                             <select className="form-control" name='to' onChange={value.handleChange}>
                                                                 <option>Select</option>
-                                                                {routes.length > 0 && routes.sort().map((x, i) => {
+                                                                {to.length > 0 && to.sort().map((x, i) => {
                                                                     return (
-                                                                        <option key={i}>{x.to}</option>
+                                                                        <option key={i}>{x}</option>
                                                                     )
                                                                 })}
                                                             </select>
