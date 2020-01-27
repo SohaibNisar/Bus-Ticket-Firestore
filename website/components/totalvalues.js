@@ -33,21 +33,35 @@ class Ratio extends Component {
             })
         })
 
-        db.collection('Routes').get().then((docs) => {
-            let routesIds = [];
-            docs.forEach((x, i) => {
-                routesIds.push(x.id)
-            })
-            this.setState({
-                totalRoutes: routesIds.length,
-            })
+        db.collection('Routes').get().then((snapshot) => {
+            if (snapshot.docs.length <= 0) {
+                this.setState({
+                    totalRoutes: 0,
+                })
+            } else {
+                let route = [];
+                let data;
+                snapshot.docs.forEach((x, i) => {
+                    data = x.data();
+                    data = Object.values(data);
+                    data.forEach((x, i) => {
+                        route.push(x)
+                    })
+                })
+
+                route = route.filter((x, i) => route.indexOf(x) === i);
+
+                console.log(route)
+                this.setState({
+                totalRoutes: route.length-1,
+                })
+            }
         })
     }
 
     componentDidMount() {
         this.getData();
     }
-
 
     render() {
         return (

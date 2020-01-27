@@ -17,6 +17,8 @@ class BusManagement extends Component {
             seatcode: [],
             classes: [],
             busDetails: [],
+            routeDetailsFrom: [],
+            routeDetailsTo: [],
         }
     }
 
@@ -92,8 +94,10 @@ class BusManagement extends Component {
 
     getData = () => {
         let colref = db.collection('Bus');
-        let details = [];
+        let fromref = db.collection('Routes').doc('location1');
+        let toref = db.collection('Routes').doc('location2');
 
+        let details = [];
         colref.get().then((docs) => {
             let ids = [];
             docs.forEach((x, i) => {
@@ -115,6 +119,22 @@ class BusManagement extends Component {
                         })
                     }
                 })
+            })
+        })
+
+        fromref.get().then(doc => {
+            let data = doc.data();
+            let from = Object.values(data);
+            this.setState({
+                routeDetailsFrom: from,
+            })
+        })
+
+        toref.get().then(doc => {
+            let data = doc.data();
+            let to = Object.values(data);
+            this.setState({
+                routeDetailsTo: to,
             })
         })
     }
@@ -193,11 +213,10 @@ class BusManagement extends Component {
             seatcode: seatcode.join(''),
             classes: classes,
         })
-
     }
 
     render() {
-        let { busName, seats, start, end, seatcode, route, busDetails } = this.state;
+        let { busName, seats, start, end, seatcode, route, busDetails, routeDetailsFrom, routeDetailsTo } = this.state;
         let view = 0;
         return (
             <div id='busmanagemet'>
@@ -304,9 +323,11 @@ class BusManagement extends Component {
                                                 value={start} required
                                             >
                                                 <option value=''>Select</option>
-                                                <option>Karachi</option>
-                                                <option>Lahore</option>
-                                                <option>Multan</option>
+                                                {routeDetailsFrom.sort().map((x, i) => {
+                                                    return (
+                                                        <option key={i}>{x}</option>
+                                                    )
+                                                })}
                                             </select>
                                         </div>
                                     </div>
@@ -320,9 +341,11 @@ class BusManagement extends Component {
                                                 value={end} required
                                             >
                                                 <option value=''>Select</option>
-                                                <option>Karachi</option>
-                                                <option>Lahore</option>
-                                                <option>Multan</option>
+                                                {routeDetailsTo.sort().map((x, i) => {
+                                                    return (
+                                                        <option key={i}>{x}</option>
+                                                    )
+                                                })}
                                             </select>
                                         </div>
                                     </div>

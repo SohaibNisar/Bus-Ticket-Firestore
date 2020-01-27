@@ -9,7 +9,8 @@ class Routes extends Component {
         this.state = {
             from: '',
             to: '',
-            routeDetails: [],
+            routeDetailsFrom: [],
+            routeDetailsTo: [],
         }
     }
 
@@ -22,68 +23,52 @@ class Routes extends Component {
         })
     }
 
-    handleSubmit = (e) => {
+    handleSubmit1 = (e) => {
         e.preventDefault();
-        let ref1 = db.collection('Routes').doc('location1');
-        let ref2 = db.collection('Routes').doc('location2');
-
-        ref1.set({
+        let ref = db.collection('Routes').doc('location1');
+        
+        ref.set({
             [this.state.from]: this.state.from,
         }, { merge: (true) })
             .then(() => {
-                ref2.set({
-                    [this.state.to]: this.state.to,
-                }, { merge: (true) }).then(() => {
-                    alert('Route Added')
-                    window.location.reload()
-                }).catch((error) => {
-                    alert(error.message)
-                })
+                alert('Route Added At Location 1')
+                window.location.reload()
+            }).catch((error) => {
+                alert(error.message)
             })
+    }
+
+    handleSubmit2 = (e) => {
+        e.preventDefault();
+        let ref = db.collection('Routes').doc('location2');
+
+        ref.set({
+            [this.state.to]: this.state.to,
+        }, { merge: (true) }).then(() => {
+            alert('Route Added At Location 2')
+            window.location.reload()
+        }).catch((error) => {
+            alert(error.message)
+        })
     }
 
     getData = () => {
         let fromref = db.collection('Routes').doc('location1');
         let toref = db.collection('Routes').doc('location2');
-        let from = [];
-        let to = []
-        let fromkeys = []
-        let tokeys = []
-        let routeDetails = [];
 
         fromref.get().then(doc => {
             let data = doc.data();
-            from = Object.values(data);
-            fromkeys = Object.keys(data);
+            let from = Object.values(data);
+            this.setState({
+                routeDetailsFrom: from,
+            })
+        })
 
-            toref.get().then(doc => {
-                let data = doc.data();
-                to = Object.values(data);
-                tokeys = Object.keys(data);
-
-                from.forEach((x, i) => {
-                    routeDetails.push({
-                        fromKey: fromkeys[i],
-                        from: x,
-                    })
-                })
-
-                to.forEach((x, i) => {
-                    if (routeDetails[i] === undefined) {
-                        routeDetails.push({
-                            toKey: tokeys[i],
-                            to: x,
-                        })
-                    }
-                    else {
-                        routeDetails[i].to = to[i];
-                        routeDetails[i].toKey = tokeys[i];
-                    }
-                })
-
-                this.setState({
-                    routeDetails: routeDetails,
-                })
+        toref.get().then(doc => {
+            let data = doc.data();
+            let to = Object.values(data);
+            this.setState({
+                routeDetailsTo: to,
             })
         })
     }
@@ -104,7 +89,7 @@ class Routes extends Component {
     }
 
     render() {
-        const { from, to, routeDetails } = this.state;
+        const { from, to, routeDetailsTo, routeDetailsFrom } = this.state;
         return (
             <div>
                 <Title title='Routes' />
@@ -134,21 +119,19 @@ class Routes extends Component {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {routeDetails.map((x, i) => {
-                                                    if (x.from && x.from) {
-                                                        return (
-                                                            <tr key={i}>
-                                                                <th className='align-middle' scope="row">{i + 1}</th>
-                                                                <td className='align-middle'>{x.from}</td>
-                                                                <td className='align-middle'>
-                                                                    <button className='remove btn btn-sm btn-danger' onClick={() => this.removeRoute('location1', x.fromKey)}>
-                                                                        {/* <i className='fas fa-times'></i> */}
-                                                                        Remove
+                                                {routeDetailsFrom.map((x, i) => {
+                                                    return (
+                                                        <tr key={i}>
+                                                            <th className='align-middle' scope="row">{i + 1}</th>
+                                                            <td className='align-middle'>{x}</td>
+                                                            <td className='align-middle'>
+                                                                <button className='remove btn btn-sm btn-danger' onClick={() => this.removeRoute('location1', x)}>
+                                                                    {/* <i className='fas fa-times'></i> */}
+                                                                    Remove
                                                                     </button>
-                                                                </td>
-                                                            </tr>
-                                                        )
-                                                    }
+                                                            </td>
+                                                        </tr>
+                                                    )
                                                 })}
                                             </tbody>
                                         </table>
@@ -166,21 +149,19 @@ class Routes extends Component {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {routeDetails.map((x, i) => {
-                                                    if (x.to && x.to) {
-                                                        return (
-                                                            <tr key={i}>
-                                                                <th className='align-middle' scope="row">{i + 1}</th>
-                                                                <td className='align-middle'>{x.to}</td>
-                                                                <td className='align-middle'>
-                                                                    <button className='remove btn btn-sm btn-danger' onClick={() => this.removeRoute('location2', x.toKey)}>
-                                                                        {/* <i className='fas fa-times'></i> */}
-                                                                        Remove
+                                                {routeDetailsTo.map((x, i) => {
+                                                    return (
+                                                        <tr key={i}>
+                                                            <th className='align-middle' scope="row">{i + 1}</th>
+                                                            <td className='align-middle'>{x}</td>
+                                                            <td className='align-middle'>
+                                                                <button className='remove btn btn-sm btn-danger' onClick={() => this.removeRoute('location2', x)}>
+                                                                    {/* <i className='fas fa-times'></i> */}
+                                                                    Remove
                                                                     </button>
-                                                                </td>
-                                                            </tr>
-                                                        )
-                                                    }
+                                                            </td>
+                                                        </tr>
+                                                    )
                                                 })}
                                             </tbody>
                                         </table>
@@ -190,24 +171,28 @@ class Routes extends Component {
 
                         </div>
                         <div className="tab-pane fade" id="add-route" role="tabpanel" aria-labelledby="add-route-tab">
-
-                            <form className='border border-light p-5' onSubmit={this.handleSubmit}>
+                            <div className='border border-light p-5' onSubmit={this.handleSubmit}>
                                 <div className="form-row">
                                     <div className="col-md-6">
-                                        <div className="form-group">
-                                            <label htmlFor="from">Location 1</label>
-                                            <input type="text" name="from" id="from" className='form-control mb-4' onChange={this.handleChange} value={from} required />
-                                        </div>
+                                        <form className='border border-light p-5' onSubmit={this.handleSubmit1}>
+                                            <div className="form-group">
+                                                <label htmlFor="from">Location 1</label>
+                                                <input type="text" name="from" id="from" className='form-control mb-4' onChange={this.handleChange} value={from} required />
+                                            </div>
+                                            <input type="submit" value="Submit" className='d-block btn btn-sm btn-primary mx-auto mb-3' />
+                                        </form>
                                     </div>
                                     <div className="col-md-6">
-                                        <div className="form-group">
-                                            <label htmlFor="to">Location 2</label>
-                                            <input type="text" name="to" id="to" className='form-control mb-4' onChange={this.handleChange} value={to} required />
-                                        </div>
+                                        <form className='border border-light p-5' onSubmit={this.handleSubmit2}>
+                                            <div className="form-group">
+                                                <label htmlFor="to">Location 2</label>
+                                                <input type="text" name="to" id="to" className='form-control mb-4' onChange={this.handleChange} value={to} required />
+                                            </div>
+                                            <input type="submit" value="Submit" className='d-block btn btn-sm btn-primary mx-auto mb-3' />
+                                        </form>
                                     </div>
-                                    <input type="submit" value="Submit" className='d-block btn btn-sm btn-primary mx-auto mb-3' />
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>

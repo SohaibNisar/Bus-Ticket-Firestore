@@ -101,10 +101,10 @@ class Users extends Component {
                                                     <td className='align-middle'>{x.phone}</td>
                                                     <td className='align-middle'>{x.role}</td>
                                                     <td className='align-middle'>
-                                                        <div className="custom-control custom-switch">
+                                                        {x.role !== 'admin' && <div className="custom-control custom-switch">
                                                             <input type="checkbox" className="custom-control-input" id="customSwitches" checked={x.checked} onChange={(e) => this.disableUser(e, x.id, i)} />
                                                             <label className="custom-control-label" htmlFor="customSwitches"  >{x.checked ? 'Click To Disable' : 'Click To Active'}</label>
-                                                        </div>
+                                                        </div>}
                                                     </td>
                                                 </tr>
                                             )

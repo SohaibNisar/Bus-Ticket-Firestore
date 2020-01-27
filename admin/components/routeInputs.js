@@ -6,36 +6,28 @@ class RouteInputs extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            routes: [],
+            routeDetailsFrom: [],
+            routeDetailsTo: [],
         }
     }
 
     getData = () => {
         let fromref = db.collection('Routes').doc('location1');
         let toref = db.collection('Routes').doc('location2');
-        let from = [];
-        let to = []
-        let routes = [];
 
         fromref.get().then(doc => {
             let data = doc.data();
-            from = Object.values(data);
-            toref.get().then(doc => {
-                let data = doc.data();
-                to = Object.values(data);
+            let from = Object.values(data);
+            this.setState({
+                routeDetailsFrom: from,
+            })
+        })
 
-                from.forEach((x, i) => {
-                    return (
-                        routes.push({
-                            from: x,
-                            to: to[i],
-                        })
-                    )
-                })
-
-                this.setState({
-                    routes: routes,
-                })
+        toref.get().then(doc => {
+            let data = doc.data();
+            let to = Object.values(data);
+            this.setState({
+                routeDetailsTo: to,
             })
         })
     }
@@ -68,9 +60,9 @@ class RouteInputs extends Component {
                                     className="from"
                                 >
                                     <option value=''>Select</option>
-                                    {this.state.routes.sort().map((x, i) => {
+                                    {this.state.routeDetailsFrom.sort().map((x, i) => {
                                         return (
-                                            <option key={i}>{x.from}</option>
+                                            <option key={i}>{x}</option>
                                         )
                                     })}
                                 </select>
@@ -85,9 +77,9 @@ class RouteInputs extends Component {
                                     className="to"
                                 >
                                     <option value=''>Select</option>
-                                    {this.state.routes.sort().map((x, i) => {
+                                    {this.state.routeDetailsFrom.sort().map((x, i) => {
                                         return (
-                                            <option key={i}>{x.to}</option>
+                                            <option key={i}>{x}</option>
                                         )
                                     })}
                                 </select>
