@@ -125,16 +125,25 @@ class BusManagement extends Component {
 
         refBus.delete().then(() => {
             refBusData.get().then((snapshot) => {
-                for (const doc of snapshot.docs) {
-                    refBusData.doc(doc.id).delete();
-                }
+                snapshot.docs.forEach((doc, i) => {
+                    refBusData.doc(doc.id)
+                        .delete();
+                    if (i == snapshot.docs.length - 1) {
+                        alert('Bus Data Has Been Removed');
+                        window.location.reload()
+                    }
+                })
+            }).catch(error => {
+                alert(error.message)
             })
-        }).then(() => {
-            alert('Bus Data Has Been Removed');
-            window.location.reload()
-        }).catch(error => {
-            alert(error.message)
         })
+            // .then(() => {
+            //     alert('Bus Data Has Been Removed');
+            //     window.location.reload()
+            // })
+            .catch(error => {
+                alert(error.message)
+            })
     }
 
     componentDidMount() {
